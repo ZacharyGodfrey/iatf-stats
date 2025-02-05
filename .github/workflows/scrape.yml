@@ -1,0 +1,23 @@
+name: Data Scrape
+on:
+  workflow_dispatch:
+  # schedule:
+    # - cron: "0 5 * * *" # At 05:00 UTC daily
+jobs:
+  get-all-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup
+        run: npm install
+      - name: Data Scrape
+        run: npm run scrape && npm run build
+      - name: Commit
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+          git pull
+          git add .
+          git commit -m "Data Scrape"
+          git push
