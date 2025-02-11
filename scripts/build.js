@@ -3,6 +3,7 @@ import { database } from '../lib/database.js';
 import { emptyFolder, readFile, writeFile } from '../lib/file.js';
 import { prepareHtmlPartial } from '../lib/render.js';
 import { renderPage } from '../app/index.js';
+import { tearDown } from '../app/index.js';
 
 console.log('Building web pages...');
 
