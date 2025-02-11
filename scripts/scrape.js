@@ -1,5 +1,5 @@
 import { database } from '../lib/database.js';
-import { launchBrowser, userAgent } from '../lib/browser';
+import { launchBrowser, userAgent } from '../lib/browser.js';
 import { PROFILE_ID, tearDown } from '../app/index.js';
 
 console.log('Scraping data...');
