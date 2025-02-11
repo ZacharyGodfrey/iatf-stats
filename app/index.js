@@ -1,4 +1,13 @@
+import { parseMetadata, renderMustache, renderMarkdown } from '../lib/render.js';
+
 export const PROFILE_ID = 1207260;
+
+export const renderPage = (shell, page, data = {}, partials = {}) => {
+  const { meta: page, content: raw } = parseMetadata(page);
+  const html = renderMustache(shell, { ...data, page }, { ...partials, content: renderMarkdown(raw) });
+
+  return html;
+};
 
 export const tearDown = async (start, db, browser) => {
   if (browser) {

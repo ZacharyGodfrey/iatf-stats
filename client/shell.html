@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {{#meta.description}}<meta name="description" content="{{{meta.description}}}">{{/meta.description}}
-    {{^meta.title}}<title>{{site.name}}</title>{{/meta.title}}
-    {{#meta.title}}<title>{{{meta.title}}} | {{site.name}}</title>{{/meta.title}}
+    {{#page.description}}<meta name="description" content="{{{page.description}}}">{{/page.description}}
+    {{^page.title}}<title>{{site.title}}</title>{{/page.title}}
+    {{#page.title}}<title>{{{page.title}}} | {{site.title}}</title>{{/page.title}}
     <link rel="shortcut icon" type="image/png" href="data:image/png;base64,/* icon */">
     <style>
       /* style */
@@ -18,7 +18,7 @@
 
     <footer>
       <p>
-        <strong>{{site.name}}</strong>
+        <strong>{{site.title}}</strong>
       </p>
 
       <p>
