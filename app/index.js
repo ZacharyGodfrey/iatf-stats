@@ -2,8 +2,8 @@ import { parseMetadata, renderMustache, renderMarkdown } from '../lib/render.js'
 
 export const PROFILE_ID = 1207260;
 
-export const renderPage = (shell, page, data = {}, partials = {}) => {
-  const { meta: page, content: raw } = parseMetadata(page);
+export const renderPage = (shell, pageFile, data = {}, partials = {}) => {
+  const { meta: page, content: raw } = parseMetadata(pageFile);
   const html = renderMustache(shell, { ...data, page }, { ...partials, content: renderMarkdown(raw) });
 
   return html;
