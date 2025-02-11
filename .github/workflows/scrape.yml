@@ -4,15 +4,17 @@ on:
   # schedule:
     # - cron: "0 5 * * *" # At 05:00 UTC daily
 jobs:
-  get-all-data:
+  data-scrape:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup
         run: npm install
-      - name: Data Scrape
-        run: npm run scrape && npm run build
+      - name: Scrape Data
+        run: npm run scrape
+      - name: Build Pages
+        run: npm run build
       - name: Commit
         run: |
           git config user.name "GitHub Actions Bot"
