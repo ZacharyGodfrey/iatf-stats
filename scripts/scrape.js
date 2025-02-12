@@ -4,6 +4,7 @@ import {
   PROFILE_ID,
   discoverMatches,
   processMatches,
+  databaseReport,
   tearDown
 } from '../app/index.js';
 
@@ -17,5 +18,7 @@ await page.setUserAgent(userAgent);
 await discoverMatches(db, page, PROFILE_ID);
 
 await processMatches(db, page, PROFILE_ID);
+
+databaseReport(db);
 
 await tearDown(start, db, browser);
