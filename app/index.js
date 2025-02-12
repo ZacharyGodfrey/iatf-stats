@@ -75,18 +75,25 @@ const fetchMatchData = async (page, profileId, matchId) => {
       continue;
     }
 
-    const rounds = rawMatch.rounds.flatMap(x => x.games).filter(x => x.player === player.profileId);
-    const hatchetRoundCount = rounds.filter(x => x.name !== 'Tie Break').length;
-    const bigAxeRoundCount = rounds.filter(x => x.name === 'Tie Break').length;
-    const invalidThrowCount = rounds.some(x => x.name !== 'Tie Break' && x.Axes.length !== 5);
+    const hatchetRounds = rawMatch.rounds
+      .filter(x => x.name !== 'Tie Break')
+      .flatMap(x => x.games)
+      .filter(x => x.player === player.profileId);
 
-    if (hatchetRoundCount !== 3 || bigAxeRoundCount > 1 || invalidThrowCount) {
+    const bigAxeRounds = rawMatch.rounds
+      .filter(x => x.name === 'Tie Break')
+      .flatMap(x => x.games)
+      .filter(x => x.player === player.profileId);
+
+    const invalidThrowCount = hatchetRounds.some(x => x.Axes.length !== 5);
+
+    if (hatchetRounds.length !== 3 || bigAxeRounds.length > 1 || invalidThrowCount) {
       player.invalid = true;
 
       continue;
     }
 
-    for (const { order: roundId, Axes } of rounds) {
+    for (const { order: roundId, Axes } of hatchetRounds.concat(bigAxeRounds)) {
       for (const { order: throwId, score, clutchCalled } of Axes) {
         player.throws.push({
           matchId,
