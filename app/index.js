@@ -201,19 +201,6 @@ export const processMatches = async (db, page, profileId) => {
         continue;
       }
 
-      db.run(`
-        UPDATE matches
-        SET opponentId = :opponentId
-        WHERE matchId = :matchId
-      `, { matchId, opponentId: match.opponent.profileId });
-
-      db.run(`
-        INSERT INTO profiles (profileId, name)
-        VALUES (:profileId, :name)
-        ON CONFLICT (profileId) DO UPDATE
-        SET name = :name
-      `, match.opponent);
-
       if (match.profile.invalid) {
         db.run(`
           UPDATE matches
@@ -232,6 +219,19 @@ export const processMatches = async (db, page, profileId) => {
           SET tool = :tool, target = :target, score = :score
         `, row);
       }
+
+      db.run(`
+        UPDATE matches
+        SET status = :status, opponentId = :opponentId
+        WHERE matchId = :matchId
+      `, { matchId, status: matchStatus.processed, opponentId: match.opponent.profileId });
+
+      db.run(`
+        INSERT INTO profiles (profileId, name)
+        VALUES (:profileId, :name)
+        ON CONFLICT (profileId) DO UPDATE
+        SET name = :name
+      `, match.opponent);
     } catch (error) {
       logError(error, { match });
     }
