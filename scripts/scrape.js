@@ -1,6 +1,11 @@
 import { database } from '../lib/database.js';
 import { launchBrowser, userAgent } from '../lib/browser.js';
-import { PROFILE_ID, tearDown } from '../app/index.js';
+import {
+  PROFILE_ID,
+  discoverMatches,
+  processMatches,
+  tearDown
+} from '../app/index.js';
 
 console.log('Scraping data...');
 
@@ -11,6 +16,8 @@ const page = await browser.newPage();
 
 await page.setUserAgent(userAgent);
 
-await tearDown(start, db, browser);
+await discoverMatches(db, page, PROFILE_ID);
 
-console.log('Done.');
+await processMatches(db, page, PROFILE_ID);
+
+await tearDown(start, db, browser);

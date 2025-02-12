@@ -37,5 +37,3 @@ for (const [output, input] of Object.entries(pages)) {
 }
 
 await tearDown(start, db);
-
-console.log('Done.');
