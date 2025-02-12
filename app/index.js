@@ -197,7 +197,7 @@ export const processMatches = async (db, page, profileId) => {
           UPDATE matches
           SET status = :status
           WHERE matchId = :matchId
-        `, { matchId, status: match.player.forfeit ? matchStatus.forfeit : matchStatus.invalid });
+        `, { matchId, status: match.profile.forfeit ? matchStatus.forfeit : matchStatus.invalid });
 
         continue;
       }
@@ -212,7 +212,7 @@ export const processMatches = async (db, page, profileId) => {
         continue;
       }
 
-      if (match.player.invalid) {
+      if (match.profile.invalid) {
         db.run(`
           UPDATE matches
           SET status = :status
@@ -222,7 +222,7 @@ export const processMatches = async (db, page, profileId) => {
         continue;
       }
 
-      for (const row of match.player.throws) {
+      for (const row of match.profile.throws) {
         db.run(`
           INSERT INTO throws (matchId, roundId, throwId, tool, target, score)
           VALUES (:matchId, :roundId, :throwId, :tool, :target, :score)

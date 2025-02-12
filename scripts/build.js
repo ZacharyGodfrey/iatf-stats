@@ -5,11 +5,12 @@ import { prepareHtmlPartial } from '../lib/render.js';
 import { renderPage } from '../app/index.js';
 import { tearDown } from '../app/index.js';
 
+const OUTPUT_DIR = 'dist';
+
 const start = Date.now();
 const db = database();
-const DIST = 'docs';
 
-emptyFolder(DIST);
+emptyFolder(OUTPUT_DIR);
 
 const shell = readFile('client/shell.html')
   .replace('/* icon */', readFile('client/icon.png', 'base64'))
@@ -26,7 +27,7 @@ const pages = {
 };
 
 for (const [output, input] of Object.entries(pages)) {
-  const path = `${DIST}/${output}`;
+  const path = `${OUTPUT_DIR}/${output}`;
   const page = readFile(`client/pages/${input}`);
 
   console.log(`Writing page: ${path}`);
