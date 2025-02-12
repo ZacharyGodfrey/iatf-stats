@@ -7,8 +7,6 @@ import {
   tearDown
 } from '../app/index.js';
 
-console.log('Scraping data...');
-
 const start = Date.now();
 const db = database();
 const browser = await launchBrowser();

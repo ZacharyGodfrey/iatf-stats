@@ -5,8 +5,6 @@ import { prepareHtmlPartial } from '../lib/render.js';
 import { renderPage } from '../app/index.js';
 import { tearDown } from '../app/index.js';
 
-console.log('Building web pages...');
-
 const start = Date.now();
 const db = database();
 const DIST = 'docs';

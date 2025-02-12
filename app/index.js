@@ -49,19 +49,19 @@ const fetchPlayerData = async (page, profileId) => {
 };
 
 export const discoverMatches = async (db, page, profileId) => {
-  console.log('|| Discover Matches ||');
+  console.log('===== Discover Matches');
 
   console.log('Done.');
 };
 
 export const processMatches = async (db, page, profileId) => {
-  console.log('|| Process Matches ||');
+  console.log('===== Process Matches');
 
   console.log('Done.');
 };
 
 export const tearDown = async (start, db, browser) => {
-  console.log('|| Tear Down ||');
+  console.log('===== Tear Down');
 
   if (browser) {
     await browser.close();
@@ -72,9 +72,9 @@ export const tearDown = async (start, db, browser) => {
   }
 
   if (start) {
-    const duration = Math.round((Date.now() - start) / 1000);
+    const duration = Math.ceil((Date.now() - start) / 1000);
 
-    console.log(`Total Runtime: ${duration || '<1'} seconds`);
+    console.log(`Total Runtime: ${duration} seconds`);
   }
 
   console.log('Done.');
