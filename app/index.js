@@ -176,8 +176,10 @@ export const processMatches = async (db, page, profileId) => {
 
     console.log(`Processing match ${matchId} (${progress} / ${newMatches.length})...`);
 
+    let match = null;
+
     try {
-      const match = await fetchMatchData(page, profileId, matchId);
+      match = await fetchMatchData(page, profileId, matchId);
 
       db.run(`
         UPDATE matches
@@ -231,7 +233,7 @@ export const processMatches = async (db, page, profileId) => {
         `, row);
       }
     } catch (error) {
-      logError(error);
+      logError(error, { match });
     }
   }
 
