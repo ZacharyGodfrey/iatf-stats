@@ -60,13 +60,13 @@ const fetchMatchData = async (page, profileId, matchId) => {
   }));
 
   const result = {
+    unplayed: players.length === 0,
     forfeit: players.some(x => x.forfeit),
-    unplayed: rawMatch.rounds.length === 0,
-    profile: players.find(x => x.profileId === profileId),
-    opponent: players.find(x => x.profileId !== profileId),
+    profile: players.find(x => x.profileId === profileId) || null,
+    opponent: players.find(x => x.profileId !== profileId) || null,
   };
 
-  if (result.forfeit || result.unplayed) {
+  if (result.unplayed || result.forfeit) {
     return result;
   }
 
@@ -181,6 +181,26 @@ export const processMatches = async (db, page, profileId) => {
     try {
       match = await fetchMatchData(page, profileId, matchId);
 
+      if (match.unplayed) {
+        db.run(`
+          UPDATE matches
+          SET status = :status
+          WHERE matchId = :matchId
+        `, { matchId, status: matchStatus.unplayed });
+
+        continue;
+      }
+
+      if (match.forfeit) {
+        db.run(`
+          UPDATE matches
+          SET status = :status
+          WHERE matchId = :matchId
+        `, { matchId, status: match.profile.forfeit ? matchStatus.forfeit : matchStatus.invalid });
+
+        continue;
+      }
+
       db.run(`
         UPDATE matches
         SET opponentId = :opponentId
@@ -193,26 +213,6 @@ export const processMatches = async (db, page, profileId) => {
         ON CONFLICT (profileId) DO UPDATE
         SET name = :name
       `, match.opponent);
-
-      if (match.forfeit) {
-        db.run(`
-          UPDATE matches
-          SET status = :status
-          WHERE matchId = :matchId
-        `, { matchId, status: match.profile.forfeit ? matchStatus.forfeit : matchStatus.invalid });
-
-        continue;
-      }
-
-      if (match.unplayed) {
-        db.run(`
-          UPDATE matches
-          SET status = :status
-          WHERE matchId = :matchId
-        `, { matchId, status: matchStatus.unplayed });
-
-        continue;
-      }
 
       if (match.profile.invalid) {
         db.run(`
