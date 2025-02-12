@@ -1,6 +1,6 @@
 import { parseMetadata, renderMustache, renderMarkdown } from '../lib/render.js';
 import { logError, imageToWebp } from '../lib/miscellaneous.js';
-import { matchStatus } from '../lib/database.js';
+import { enums } from '../lib/database.js';
 
 export const PROFILE_ID = 1207260;
 
@@ -51,32 +51,38 @@ const fetchMatchData = async (page, profileId, matchId) => {
   ]);
 
   const rawMatch = await apiResponse.json();
-  const players = rawMatch.players.map(({ id, name, forfeit }) => ({
+  const players = rawMatch.players.map(({ id, name, forfeit, score }) => ({
     profileId: id,
     name,
     forfeit,
     invalid: false,
+    score,
     throws: []
   }));
 
   const result = {
     unplayed: players.length === 0,
-    forfeit: players.some(x => x.forfeit),
     profile: players.find(x => x.profileId === profileId) || null,
     opponent: players.find(x => x.profileId !== profileId) || null,
   };
 
-  if (result.unplayed || result.forfeit) {
+  if (result.unplayed) {
     return result;
   }
 
-  for (const player of players.filter(x => !x.forfeit)) {
-    const rounds = rawMatch.rounds.flatMap(x => x.games).filter(x => x.player === player.profileId);
-    const invalidRoundCount = ![3, 4].includes(rounds.length);
-    const invalidThrowCount = rounds.slice(0, 3).some(x => x.Axes.length !== 5);
+  for (const player of players) {
+    if (player.forfeit) {
+      continue;
+    }
 
-    if (invalidRoundCount || invalidThrowCount) {
+    const rounds = rawMatch.rounds.flatMap(x => x.games).filter(x => x.player === player.profileId);
+    const hatchetRoundCount = rounds.filter(x => x.name !== 'Tie Break').length;
+    const bigAxeRoundCount = rounds.filter(x => x.name === 'Tie Break').length;
+    const invalidThrowCount = rounds.some(x => x.name !== 'Tie Break' && x.Axes.length !== 5);
+
+    if (hatchetRoundCount !== 3 || bigAxeRoundCount > 1 || invalidThrowCount) {
       player.invalid = true;
+
       continue;
     }
 
@@ -141,13 +147,20 @@ export const discoverMatches = async (db, page, profileId) => {
       `, { seasonId, name, year, seasonRank, playoffRank });
 
       for (const { week: weekId, matches } of seasonWeeks) {
-        for (const { id: matchId } of matches) {
+        for (const { id: matchId, result } of matches) {
+          const outcome = {
+            'F': enums.outcome.forfeit,
+            'L': enums.outcome.loss,
+            'OTL': enums.outcome.otl,
+            'W': enums.outcome.win,
+          }[result] || enums.outcome.tbd;
+
           db.run(`
-            INSERT INTO matches (seasonId, weekId, matchId)
-            VALUES (:seasonId, :weekId, :matchId)
+            INSERT INTO matches (seasonId, weekId, matchId, outcome)
+            VALUES (:seasonId, :weekId, :matchId, :outcome)
             ON CONFLICT (matchId) DO UPDATE
-            SET weekId = :weekId
-          `, { seasonId, weekId, matchId });
+            SET weekId = :weekId, outcome = :outcome
+          `, { seasonId, weekId, matchId, outcome });
         }
       }
     }
@@ -164,8 +177,8 @@ export const processMatches = async (db, page, profileId) => {
   const newMatches = db.rows(`
     SELECT matchId
     FROM matches
-    WHERE status = ${matchStatus.new}
-  `);
+    WHERE status = :status
+  `, { status: enums.matchStatus.new });
 
   console.log(`Found ${newMatches.length} new matches.`);
 
@@ -186,17 +199,17 @@ export const processMatches = async (db, page, profileId) => {
           UPDATE matches
           SET status = :status
           WHERE matchId = :matchId
-        `, { matchId, status: matchStatus.unplayed });
+        `, { matchId, status: enums.matchStatus.unplayed });
 
         continue;
       }
 
-      if (match.forfeit) {
+      if (match.profile.forfeit) {
         db.run(`
           UPDATE matches
           SET status = :status
           WHERE matchId = :matchId
-        `, { matchId, status: match.profile.forfeit ? matchStatus.forfeit : matchStatus.invalid });
+        `, { matchId, status: enums.matchStatus.forfeit });
 
         continue;
       }
@@ -206,7 +219,7 @@ export const processMatches = async (db, page, profileId) => {
           UPDATE matches
           SET status = :status
           WHERE matchId = :matchId
-        `, { matchId, status: matchStatus.invalid });
+        `, { matchId, status: enums.matchStatus.invalid });
 
         continue;
       }
@@ -222,9 +235,14 @@ export const processMatches = async (db, page, profileId) => {
 
       db.run(`
         UPDATE matches
-        SET status = :status, opponentId = :opponentId
+        SET status = :status, opponentId = :opponentId, score = :score
         WHERE matchId = :matchId
-      `, { matchId, status: matchStatus.processed, opponentId: match.opponent.profileId });
+      `, {
+        matchId,
+        status: enums.matchStatus.processed,
+        opponentId: match.opponent.profileId,
+        score: match.profile.score
+      });
 
       db.run(`
         INSERT INTO profiles (profileId, name)
