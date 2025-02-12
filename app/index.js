@@ -82,8 +82,8 @@ export const discoverMatches = async (db, page, profileId) => {
       for (const { week: weekId, matches } of seasonWeeks) {
         for (const { id: matchId } of matches) {
           db.run(`
-            INSERT INTO matches (seasonId, weekId, matchId, status)
-            VALUES (:seasonId, :weekId, :matchId, ${database.enums.matchStatus.new})
+            INSERT INTO matches (seasonId, weekId, matchId)
+            VALUES (:seasonId, :weekId, :matchId)
             ON CONFLICT (matchId) DO UPDATE
             SET weekId = :weekId
           `, { seasonId, weekId, matchId });
