@@ -1,6 +1,6 @@
 import { config } from '../client/config.js';
 import { database } from '../lib/database.js';
-import { emptyFolder, readFile, writeFile } from '../lib/file.js';
+import { emptyFolder, readFile, listFiles, writeFile } from '../lib/file.js';
 import { prepareHtmlPartial } from '../lib/render.js';
 import { renderPage } from '../app/index.js';
 import { tearDown } from '../app/index.js';
@@ -25,6 +25,10 @@ const pages = {
   'about.html': 'about.md',
   '404.html':   '404.md',
 };
+
+for (const filePath of listFiles('client/pages/**/*.html')) {
+  //
+}
 
 for (const [output, input] of Object.entries(pages)) {
   const path = `${OUTPUT_DIR}/${output}`;
