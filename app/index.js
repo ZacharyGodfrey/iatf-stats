@@ -155,22 +155,23 @@ export const discoverMatches = async (db, page, profileId) => {
       SET name = :name
     `, { profileId, name });
 
-    for (const { id: seasonId, seasonWeeks, performanceName, ...season } of leagues) {
-      if (performanceName !== RULESET) {
-        continue;
-      }
-
-      const name = `${season.name.trim()} ${season.shortName.trim()}`;
-      const year = parseInt(season.date.split('-')[0]);
-      const seasonRank = season.seasonRank || 0;
-      const playoffRank = season.playoffRank || 0;
-
+    for (const { id: seasonId, seasonWeeks, ...season } of leagues) {
       db.run(`
-        INSERT INTO seasons (seasonId, name, year, seasonRank, playoffRank)
-        VALUES (:seasonId, :name, :year, :seasonRank, :playoffRank)
+        INSERT INTO seasons (seasonId, year, ruleset, name, seasonRank, playoffRank)
+        VALUES (:seasonId, :year, :ruleset, :name, :seasonRank, :playoffRank)
         ON CONFLICT (seasonId) DO UPDATE
-        SET name = :name, year = :year, seasonRank = :seasonRank, playoffRank = :playoffRank
-      `, { seasonId, name, year, seasonRank, playoffRank });
+        SET year = :year, ruleset = :ruleset, name = :name, seasonRank = :seasonRank, playoffRank = :playoffRank
+      `, {
+        seasonId,
+        year: parseInt(season.date.split('-')[0]),
+        ruleset: {
+          'IATF Standard': enums.ruleset.standard,
+          'IATF Premier': enums.ruleset.premier,
+        }[season.performanceName] || enums.ruleset.unknown,
+        name: `${season.name.trim()} ${season.shortName.trim()}`,
+        seasonRank: season.seasonRank || 0,
+        playoffRank: season.playoffRank || 0
+      });
 
       seasonCount++;
 
