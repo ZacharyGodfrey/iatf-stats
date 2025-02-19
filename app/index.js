@@ -57,6 +57,7 @@ const fetchMatchData = async (page, profileId, matchId) => {
     forfeit,
     invalid: false,
     score,
+    rounds: [],
     throws: []
   }));
 
@@ -94,6 +95,12 @@ const fetchMatchData = async (page, profileId, matchId) => {
     }
 
     for (const { order: roundId, Axes } of hatchetRounds.concat(bigAxeRounds)) {
+      player.rounds.push({
+        roundId,
+        outcome: '',
+        score: Axes.reduce((total, { score }) => total + score, 0)
+      });
+
       for (const { order: throwId, score, clutchCalled } of Axes) {
         player.throws.push({
           matchId,
@@ -106,6 +113,16 @@ const fetchMatchData = async (page, profileId, matchId) => {
       }
     }
   }
+
+  result.profile.rounds.forEach((round, i) => {
+    const opponentScore = (result.opponent.rounds[i] || { score: 0 }).score;
+
+    switch (true) {
+      case round.score > opponentScore: round.outcome = enums.outcome.win; break;
+      case round.score === opponentScore: round.outcome = enums.outcome.tie; break;
+      case round.score < opponentScore: round.outcome = enums.outcome.loss; break;
+    }
+  });
 
   return result;
 };
@@ -239,6 +256,15 @@ export const processMatches = async (db, page, profileId) => {
         continue;
       }
 
+      for (const { roundId, outcome, score } of match.profile.rounds) {
+        db.run(`
+          INSERT INTO rounds (matchId, roundId, outcome, score)
+          VALUES (:matchId, :roundId, :outcome, :score)
+          ON CONFLICT (matchId, roundId) DO UPDATE
+          SET outcome = :outcome, score = :score
+        `, { matchId, roundId, outcome, score });
+      }
+
       for (const row of match.profile.throws) {
         db.run(`
           INSERT INTO throws (matchId, roundId, throwId, tool, target, score)
@@ -284,6 +310,17 @@ export const databaseReport = (db) => {
 
   console.log('Matches:');
   console.table(db.rows(`SELECT * FROM matches`));
+
+  console.log('Rounds Count:');
+  console.log(db.row(`SELECT COUNT(*) AS count FROM rounds`).count);
+
+  console.log('Last 12 Rounds:');
+  console.table(db.rows(`
+    SELECT *
+    FROM rounds
+    ORDER BY matchId DESC, roundId DESC
+    LIMIT 12
+  `));
 
   console.log('Throws Count:');
   console.log(db.row(`SELECT COUNT(*) AS count FROM throws`).count);

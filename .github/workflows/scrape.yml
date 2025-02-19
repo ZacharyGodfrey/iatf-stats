@@ -1,8 +1,8 @@
 name: Data Scrape
 on:
   workflow_dispatch:
-  # schedule:
-    # - cron: "0 5 * * *" # At 05:00 UTC daily
+  schedule:
+    - cron: "0 5 * * 4" # At 05:00 UTC every Thursday
 jobs:
   data-scrape:
     runs-on: ubuntu-latest
