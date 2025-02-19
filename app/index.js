@@ -356,12 +356,3 @@ export const tearDown = async (start, db, browser) => {
 
   console.log('Done.');
 };
-
-// Build
-
-export const renderPage = (shell, pageFile, data = {}, partials = {}) => {
-  const { meta: page, content: raw } = parseMetadata(pageFile);
-  const html = renderMustache(shell, { ...data, page }, { ...partials, content: renderMarkdown(raw) });
-
-  return html;
-};
