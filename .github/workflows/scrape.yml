@@ -15,8 +15,6 @@ jobs:
         run: npm run scrape
       - name: Report Data
         run: npm run report
-      - name: Build Pages
-        run: npm run build
       - name: Commit
         run: |
           git config user.name "GitHub Actions Bot"
