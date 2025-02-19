@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    {{^page.description}}<meta name="description" content="{{{site.title}}}">{{/page.description}}
     {{#page.description}}<meta name="description" content="{{{page.description}}}">{{/page.description}}
     {{^page.title}}<title>{{site.title}}</title>{{/page.title}}
     {{#page.title}}<title>{{{page.title}}} | {{site.title}}</title>{{/page.title}}
