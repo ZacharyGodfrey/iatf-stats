@@ -29,6 +29,21 @@ body {
   overflow-x: hidden;
 }
 
+header {
+  padding: 0.5rem 1rem;
+}
+
 main {
   flex: 1;
+  padding: 1rem;
+}
+
+footer {
+  padding: 1rem;
+  color: white;
+  background: #404040;
+}
+
+h1, h2, h3, p {
+  font-size: 1rem;
 }
