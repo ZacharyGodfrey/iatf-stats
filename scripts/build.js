@@ -21,9 +21,9 @@ const partials = {
 };
 
 const pages = {
-  'index.html': 'index.md',
-  'about.html': 'about.md',
-  '404.html':   '404.md',
+  'index.html': 'index.html',
+  'about.html': 'about.html',
+  '404.html':   '404.html',
 };
 
 for (const filePath of listFiles('client/pages/**/*.html')) {
