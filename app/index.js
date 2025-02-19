@@ -184,8 +184,8 @@ export const processMatches = async (db, page, profileId) => {
   const newMatches = db.rows(`
     SELECT matchId
     FROM matches
-    WHERE status = :status
-  `, { status: enums.matchStatus.new });
+    WHERE status IN (:new, :unplayed)
+  `, enums.matchStatus);
 
   console.log(`Found ${newMatches.length} new matches.`);
 
