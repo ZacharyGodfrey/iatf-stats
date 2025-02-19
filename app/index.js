@@ -1,4 +1,3 @@
-import { parseMetadata, renderMustache, renderMarkdown } from '../lib/render.js';
 import { logError, imageToWebp } from '../lib/miscellaneous.js';
 import { enums } from '../lib/database.js';
 
@@ -10,7 +9,6 @@ const TOOL_BIG_AXE = 'big axe';
 const TARGET_BULLSEYE = 'bullseye';
 const TARGET_CLUTCH = 'clutch';
 
-const RULESET = 'IATF Premier';
 const TIMEOUT = 2000;
 
 // Scrape
