@@ -1,11 +1,6 @@
 name: Build Pages
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths-ignore:
-      - 'docs/**'
 jobs:
   build-pages:
     runs-on: ubuntu-latest

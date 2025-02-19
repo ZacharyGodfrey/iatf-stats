@@ -6,7 +6,6 @@ import {
   fetchProfileImage,
   discoverMatches,
   processMatches,
-  databaseReport,
   tearDown
 } from '../app/index.js';
 
@@ -24,7 +23,5 @@ await fetchProfileImage(PROFILE_ID).then((image) => {
 await discoverMatches(db, page, PROFILE_ID);
 
 await processMatches(db, page, PROFILE_ID);
-
-databaseReport(db);
 
 await tearDown(start, db, browser);

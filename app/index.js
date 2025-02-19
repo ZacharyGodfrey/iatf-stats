@@ -125,6 +125,8 @@ export const fetchProfileImage = async (profileId) => {
 export const discoverMatches = async (db, page, profileId) => {
   console.log('===== Discover Matches');
 
+  let seasonCount = 0, matchCount = 0;
+
   try {
     const playerData = await fetchPlayerData(page, profileId);
     const { name, leagues } = playerData;
@@ -153,6 +155,8 @@ export const discoverMatches = async (db, page, profileId) => {
         SET name = :name, year = :year, seasonRank = :seasonRank, playoffRank = :playoffRank
       `, { seasonId, name, year, seasonRank, playoffRank });
 
+      seasonCount++;
+
       for (const { week: weekId, matches } of seasonWeeks) {
         for (const { id: matchId, result } of matches) {
           const outcome = {
@@ -168,12 +172,16 @@ export const discoverMatches = async (db, page, profileId) => {
             ON CONFLICT (matchId) DO UPDATE
             SET weekId = :weekId, outcome = :outcome
           `, { seasonId, weekId, matchId, outcome });
+
+          matchCount++;
         }
       }
     }
   } catch (error) {
     logError(error);
   }
+
+  console.log(`Discovered ${matchCount} matches from ${seasonCount} seasons.`);
 
   console.log('Done.');
 };
