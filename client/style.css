@@ -6,7 +6,7 @@
 }
 
 :root {
-  --main: hsl(205, 75%, 50%);
+  --main: hsl(85, 45%, 45%);
   --dark: #404040;
   --highlight: hsl(55, 100%, 50%);
   --content-width: 800px;
@@ -54,7 +54,7 @@ footer {
   background: var(--dark);
 }
 
-section, hgroup, h1, h2, p, hr, figure, table {
+section, hgroup, h1, h2, p, hr, details, summary, figure, table {
   margin-block: 2rem;
 }
 
