@@ -4,10 +4,11 @@
 }
 
 :root {
+  --dark: #404040;
   --content-width: 800px;
   font-size: 16px;
   font-family: monospace;
-  color: black;
+  color: var(--dark);
   background: white;
 }
 
@@ -37,7 +38,7 @@ section {
 header {
   padding: 0.5rem 1rem;
   color: white;
-  background: #404040;
+  background: var(--dark);
 }
 
 main {
@@ -48,7 +49,7 @@ main {
 footer {
   padding: 1rem;
   color: white;
-  background: #404040;
+  background: var(--dark);
 }
 
 section:not(:only-child), h1, h2, p, hr {
@@ -73,11 +74,29 @@ p {
 
 hr {
   height: 2px;
-  background: black;
+  background: var(--dark);
   border: none;
   outline: none;
 }
 
 a {
   color: inherit;
+}
+
+figure {
+  overflow-x: auto;
+}
+
+table, th, td {
+  border: 1px solid var(--dark);
+}
+
+table {
+  min-width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  color: white;
+  background: var(--dark);
 }
