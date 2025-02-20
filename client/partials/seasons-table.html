@@ -1,0 +1,24 @@
+<figure>
+  <table id="seasons">
+    <thead>
+      <tr>
+        <th>Year</th>
+        <th>Ruleset</th>
+        <th>Name</th>
+        <th>Season Rank</th>
+        <th>Playoff Rank</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#data.seasons}}
+      <tr>
+        <td>{{year}}</td>
+        <td>{{ruleset}}</td>
+        <td>{{name}}</td>
+        <td>{{seasonRank}}</td>
+        <td>{{playoffRank}}</td>
+      </tr>
+      {{/data.seasons}}
+    </tbody>
+  </table>
+</figure>
