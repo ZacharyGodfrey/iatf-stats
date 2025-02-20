@@ -1,6 +1,8 @@
 * {
   position: relative;
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 :root {
@@ -23,8 +25,6 @@
 body {
   display: flex;
   flex-direction: column;
-  margin: 0;
-  padding: 0;
   min-width: 380px;
   min-height: 100vh;
   min-height: 100svh;
@@ -52,7 +52,7 @@ footer {
   background: var(--dark);
 }
 
-section:not(:only-child), h1, h2, p, hr {
+:is(section, h1, h2, p, hr, figure, table):not(:only-child) {
   margin-block: 2rem;
 }
 
@@ -84,6 +84,7 @@ a {
 }
 
 figure {
+  width: 100%;
   overflow-x: auto;
 }
 
@@ -99,4 +100,8 @@ table {
 thead {
   color: white;
   background: var(--dark);
+}
+
+th, td {
+  padding: 0.25rem;
 }
