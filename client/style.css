@@ -7,7 +7,7 @@
 
 :root {
   --main: hsl(85, 45%, 45%);
-  --grey: #CCCCCC;
+  --grey: #DDDDDD;
   --dark: #404040;
   --highlight: hsl(55, 100%, 50%);
   --content-width: 800px;
@@ -94,6 +94,10 @@ hr {
 
 a {
   color: inherit;
+}
+
+a.normal {
+  text-decoration: none;
 }
 
 figure {
