@@ -582,7 +582,7 @@ export function getAllData(db) {
 
             const throws = db.rows(`
               SELECT * FROM throws
-              WHERE matchId = :matchId, roundId = :roundId
+              WHERE matchId = :matchId AND roundId = :roundId
               ORDER BY throwId ASC
             `, { matchId: m.matchId, roundId: r.roundId });
 
