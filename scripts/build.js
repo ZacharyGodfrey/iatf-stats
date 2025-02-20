@@ -23,8 +23,6 @@ const partials = listFiles('client/partials/*.html').reduce((result, fileName) =
   return result;
 }, {});
 
-console.log('Partials: ', Object.keys(partials));
-
 const allData = getAllData(db);
 
 for (const filePath of listFiles('client/pages/**/*.html')) {

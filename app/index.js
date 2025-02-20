@@ -208,8 +208,7 @@ export const processMatches = async (db, page, profileId) => {
   console.log('===== Process Matches');
 
   const newMatches = db.rows(`
-    SELECT matchId
-    FROM matches
+    SELECT matchId FROM matches
     WHERE status IN (:new, :unplayed)
   `, enums.matchStatus);
 
@@ -229,8 +228,7 @@ export const processMatches = async (db, page, profileId) => {
 
       if (match.unplayed) {
         db.run(`
-          UPDATE matches
-          SET status = :status
+          UPDATE matches SET status = :status
           WHERE matchId = :matchId
         `, { matchId, status: enums.matchStatus.unplayed });
 
@@ -239,8 +237,7 @@ export const processMatches = async (db, page, profileId) => {
 
       if (match.profile.forfeit) {
         db.run(`
-          UPDATE matches
-          SET status = :status
+          UPDATE matches SET status = :status
           WHERE matchId = :matchId
         `, { matchId, status: enums.matchStatus.forfeit });
 
@@ -249,8 +246,7 @@ export const processMatches = async (db, page, profileId) => {
 
       if (match.profile.invalid) {
         db.run(`
-          UPDATE matches
-          SET status = :status
+          UPDATE matches SET status = :status
           WHERE matchId = :matchId
         `, { matchId, status: enums.matchStatus.invalid });
 
@@ -276,8 +272,7 @@ export const processMatches = async (db, page, profileId) => {
       }
 
       db.run(`
-        UPDATE matches
-        SET status = :status, opponentId = :opponentId, score = :score
+        UPDATE matches SET status = :status, opponentId = :opponentId, score = :score
         WHERE matchId = :matchId
       `, {
         matchId,
@@ -317,8 +312,7 @@ export const databaseReport = (db) => {
 
   console.log('Last 12 Rounds:');
   console.table(db.rows(`
-    SELECT *
-    FROM rounds
+    SELECT * FROM rounds
     ORDER BY matchId DESC, roundId DESC
     LIMIT 12
   `));
@@ -328,8 +322,7 @@ export const databaseReport = (db) => {
 
   console.log('Last 15 Throws:');
   console.table(db.rows(`
-    SELECT *
-    FROM throws
+    SELECT * FROM throws
     ORDER BY matchId DESC, roundId DESC, throwId DESC
     LIMIT 15
   `));
@@ -360,18 +353,32 @@ export const tearDown = async (start, db, browser) => {
 // Build
 
 export const getAllData = (db) => {
-  const profiles = db.rows(`SELECT * FROM profiles ORDER BY name ASC`);
-  const seasons = db.rows(`SELECT * FROM seasons ORDER BY ruleset DESC, seasonId ASC`);
+  const profiles = db.rows(`
+    SELECT * FROM profiles
+    ORDER BY name ASC
+  `);
+
+  const seasons = db.rows(`
+    SELECT * FROM seasons
+    ORDER BY ruleset DESC, seasonId ASC
+  `);
+
   const matches = db.rows(`
     SELECT * FROM matches
     WHERE status = :status
     ORDER BY seasonId ASC, weekId ASC, matchId ASC
   `, { status: enums.matchStatus.processed });
 
+  const throws = db.rows(`
+    SELECT * FROM throws
+    ORDER BY matchId ASC, roundId ASC, throwId ASC
+  `);
+
   return {
     profile: profiles.find(x => x.profileId === PROFILE_ID),
     opponents: profiles.filter(x => x.profileId !== PROFILE_ID),
     seasons,
-    matches
+    matches,
+    throws
   };
 };
