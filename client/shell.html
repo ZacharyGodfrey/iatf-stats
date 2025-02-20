@@ -14,21 +14,29 @@
   </head>
   <body>
     <header>
-      <p>Header</p>
+      <section>
+        <p>
+          <strong>{{site.title}}</strong>
+        </p>
+      </section>
     </header>
 
     <main>
-      {{>content}}
+      <section>
+        {{>content}}
+      </section>
     </main>
 
     <footer>
-      <p>
-        <strong>{{site.title}}</strong>
-      </p>
+      <section>
+        <p>
+          <strong>{{site.title}}</strong>
+        </p>
 
-      <p>
-        <a href="/about">About</a>
-      </p>
+        <p>
+          <a href="/about">About</a>
+        </p>
+      </section>
     </footer>
 
     <script type="text/javascript">

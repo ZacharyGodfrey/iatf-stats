@@ -4,6 +4,7 @@
 }
 
 :root {
+  --content-width: 800px;
   font-size: 16px;
   font-family: monospace;
   color: black;
@@ -23,14 +24,20 @@ body {
   flex-direction: column;
   margin: 0;
   padding: 0;
-  width: 100%;
+  min-width: 380px;
   min-height: 100vh;
   min-height: 100svh;
-  overflow-x: hidden;
+}
+
+section {
+  max-width: var(--content-width);
+  margin-inline: auto;
 }
 
 header {
   padding: 0.5rem 1rem;
+  color: white;
+  background: #404040;
 }
 
 main {
