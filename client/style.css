@@ -125,7 +125,7 @@ table {
   border-collapse: collapse;
 }
 
-thead {
+thead, th {
   color: white;
   background: var(--dark);
 }
