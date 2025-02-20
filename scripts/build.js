@@ -2,7 +2,7 @@ import { config } from '../client/config.js';
 import { database } from '../lib/database.js';
 import { emptyFolder, readFile, listFiles, writeFile } from '../lib/file.js';
 import { parseMetadata, renderMustache } from '../lib/render.js';
-import { tearDown } from '../app/index.js';
+import { allData, tearDown } from '../app/index.js';
 
 const OUTPUT_DIR = 'dist';
 
@@ -19,10 +19,12 @@ const partials = {
   profileHeader: readFile('client/partials/profile-header.html'),
 };
 
+const allData = getAllData(db);
+
 for (const filePath of listFiles('client/pages/**/*.html')) {
   const { meta, content } = parseMetadata(readFile(filePath));
   const path = `${OUTPUT_DIR}/${meta.url}`;
-  const data = { ...config, page: meta };
+  const data = { ...config, page: meta, data: allData };
   const output = renderMustache(shell, data, { ...partials, content });
 
   console.log(`Writing page: ${path}`);

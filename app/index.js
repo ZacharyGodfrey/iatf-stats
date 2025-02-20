@@ -11,7 +11,7 @@ const TARGET_CLUTCH = 'clutch';
 
 const TIMEOUT = 2000;
 
-// Scrape
+// Helpers
 
 const reactPageState = (page) => {
   return page.evaluate(() => {
@@ -124,6 +124,8 @@ const fetchMatchData = async (page, profileId, matchId) => {
 
   return result;
 };
+
+// Scrape
 
 export const fetchProfileImage = async (profileId) => {
   console.log(`===== Fetch Image ${profileId}`);
@@ -353,4 +355,16 @@ export const tearDown = async (start, db, browser) => {
   }
 
   console.log('Done.');
+};
+
+// Build
+
+export const getAllData = (db) => {
+  const result = {
+    profile: {
+      id: PROFILE_ID
+    }
+  };
+
+  return result;
 };
