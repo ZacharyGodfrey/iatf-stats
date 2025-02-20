@@ -360,12 +360,18 @@ export const tearDown = async (start, db, browser) => {
 // Build
 
 export const getAllData = (db) => {
-  const profiles = db.rows(`SELECT * FROM profiles`);
-  const seasons = db.rows(`SELECT * FROM seasons`);
+  const profiles = db.rows(`SELECT * FROM profiles ORDER BY name ASC`);
+  const seasons = db.rows(`SELECT * FROM seasons ORDER BY ruleset DESC, seasonId ASC`);
+  const matches = db.rows(`
+    SELECT * FROM matches
+    WHERE status = :status
+    ORDER BY seasonId ASC, weekId ASC, matchId ASC
+  `, { status: enums.matchStatus.processed });
 
   return {
     profile: profiles.find(x => x.profileId === PROFILE_ID),
     opponents: profiles.filter(x => x.profileId !== PROFILE_ID),
-    seasons
+    seasons,
+    matches
   };
 };
