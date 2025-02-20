@@ -513,10 +513,14 @@ export function getAllData(db) {
   const profiles = db.rows(`
     SELECT * FROM profiles
     ORDER BY name ASC
-  `);
+  `).reduce((map, profile) => {
+    map[profile.profileId] = profile;
+
+    return map;
+  }, {});
 
   const result = {
-    profile: profiles.find(p => p.profileId === PROFILE_ID),
+    profile: profiles[PROFILE_ID],
   };
 
   for (const ruleset of Object.values(enums.ruleset)) {
