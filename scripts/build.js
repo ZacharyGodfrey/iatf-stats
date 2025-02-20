@@ -1,6 +1,6 @@
 import { config } from '../client/config.js';
 import { database } from '../lib/database.js';
-import { emptyFolder, readFile, listFiles, writeFile } from '../lib/file.js';
+import { emptyFolder, copyFolder, readFile, listFiles, writeFile } from '../lib/file.js';
 import { parseMetadata, renderMustache } from '../lib/render.js';
 import { getAllData, tearDown } from '../app/index.js';
 
@@ -10,6 +10,7 @@ const start = Date.now();
 const db = database();
 
 emptyFolder(OUTPUT_DIR);
+copyFolder('data/images', OUTPUT_DIR);
 
 const shell = readFile('client/shell.html')
   .replace('/* icon */', readFile('client/icon.png', 'base64'))

@@ -102,6 +102,11 @@ a.normal {
   text-decoration: none;
 }
 
+img {
+  display: block;
+  max-width: 100%;
+}
+
 figure {
   width: 100%;
   overflow-x: auto;
@@ -126,4 +131,5 @@ th, td {
   text-align: center;
 }
 
+.text-center { text-align: center; }
 .text-right { text-align: right; }

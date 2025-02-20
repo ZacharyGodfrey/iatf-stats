@@ -1,4 +1,4 @@
-import { logError, imageToWebp } from '../lib/miscellaneous.js';
+import { logError, imageToWebp, round } from '../lib/miscellaneous.js';
 import { enums } from '../lib/database.js';
 
 export const PROFILE_ID = 1207260;
@@ -352,37 +352,260 @@ export const tearDown = async (start, db, browser) => {
 
 // Build
 
-export const getAllData = (db) => {
+function scorePerAxe(score, attempts) {
+  return round(3, score / Math.max(1, attempts));
+};
+
+function hitPercent(hits, attempts) {
+  return round(3, 100 * hits / Math.max(1, attempts));
+};
+
+function getStats(throws) {
+  const result = {
+    overall: {
+      attempts: 0,
+      totalScore: 0,
+      scorePerAxe: 0
+    },
+    hatchet: {
+      overall: {
+        attempts: 0,
+        totalScore: 0,
+        scorePerAxe: 0
+      },
+      bullseye: {
+        attempts: 0,
+        totalScore: 0,
+        scorePerAxe: 0,
+        count: {
+          0: 0,
+          1: 0,
+          3: 0,
+          5: 0
+        },
+        percent: {
+          0: 0,
+          1: 0,
+          3: 0,
+          5: 0
+        }
+      },
+      clutch: {
+        attempts: 0,
+        totalScore: 0,
+        scorePerAxe: 0,
+        count: {
+          0: 0,
+          5: 0,
+          7: 0
+        },
+        percent: {
+          0: 0,
+          5: 0,
+          7: 0
+        }
+      }
+    },
+    bigAxe: {
+      overall: {
+        attempts: 0,
+        totalScore: 0,
+        scorePerAxe: 0
+      },
+      bullseye: {
+        attempts: 0,
+        totalScore: 0,
+        scorePerAxe: 0,
+        count: {
+          0: 0,
+          1: 0,
+          3: 0,
+          5: 0
+        },
+        percent: {
+          0: 0,
+          1: 0,
+          3: 0,
+          5: 0
+        }
+      },
+      clutch: {
+        attempts: 0,
+        totalScore: 0,
+        scorePerAxe: 0,
+        count: {
+          0: 0,
+          5: 0,
+          7: 0
+        },
+        percent: {
+          0: 0,
+          5: 0,
+          7: 0
+        }
+      }
+    }
+  };
+
+  for (const { tool, target, score } of throws) {
+    result.overall.attempts += 1;
+    result.overall.totalScore += score;
+
+    if (tool === TOOL_HATCHET) {
+      result.hatchet.overall.attempts += 1;
+      result.hatchet.overall.totalScore += score;
+
+      if (target === TARGET_BULLSEYE) {
+        result.hatchet.bullseye.attempts += 1;
+        result.hatchet.bullseye.totalScore += score;
+        result.hatchet.bullseye.count[score] += 1;
+      } else if (target === TARGET_CLUTCH) {
+        result.hatchet.clutch.attempts += 1;
+        result.hatchet.clutch.totalScore += score;
+        result.hatchet.clutch.count[score] += 1;
+      }
+    } else if (tool === TOOL_BIG_AXE) {
+      result.bigAxe.overall.attempts += 1;
+      result.bigAxe.overall.totalScore += score;
+
+      if (target === TARGET_BULLSEYE) {
+        result.bigAxe.bullseye.attempts += 1;
+        result.bigAxe.bullseye.totalScore += score;
+        result.bigAxe.bullseye.count[score] += 1;
+      } else if (target === TARGET_CLUTCH) {
+        result.bigAxe.clutch.attempts += 1;
+        result.bigAxe.clutch.totalScore += score;
+        result.bigAxe.clutch.count[score] += 1;
+      }
+    }
+  }
+
+  result.overall.scorePerAxe = scorePerAxe(result.overall.totalScore, result.overall.attempts);
+  result.hatchet.overall.scorePerAxe = scorePerAxe(result.hatchet.overall.totalScore, result.hatchet.overall.attempts);
+  result.bigAxe.overall.scorePerAxe = scorePerAxe(result.bigAxe.overall.totalScore, result.bigAxe.overall.attempts);
+
+  result.hatchet.bullseye.scorePerAxe = scorePerAxe(result.hatchet.bullseye.totalScore, result.hatchet.bullseye.attempts);
+  result.hatchet.bullseye.percent[0] = hitPercent(result.hatchet.bullseye.count[0], result.hatchet.bullseye.attempts);
+  result.hatchet.bullseye.percent[1] = hitPercent(result.hatchet.bullseye.count[1], result.hatchet.bullseye.attempts);
+  result.hatchet.bullseye.percent[3] = hitPercent(result.hatchet.bullseye.count[3], result.hatchet.bullseye.attempts);
+  result.hatchet.bullseye.percent[5] = hitPercent(result.hatchet.bullseye.count[5], result.hatchet.bullseye.attempts);
+
+  result.hatchet.clutch.scorePerAxe = scorePerAxe(result.hatchet.clutch.totalScore, result.hatchet.clutch.attempts);
+  result.hatchet.clutch.percent[0] = hitPercent(result.hatchet.clutch.count[0], result.hatchet.clutch.attempts);
+  result.hatchet.clutch.percent[5] = hitPercent(result.hatchet.clutch.count[5], result.hatchet.clutch.attempts);
+  result.hatchet.clutch.percent[7] = hitPercent(result.hatchet.clutch.count[7], result.hatchet.clutch.attempts);
+
+  result.bigAxe.bullseye.scorePerAxe = scorePerAxe(result.bigAxe.bullseye.totalScore, result.bigAxe.bullseye.attempts);
+  result.bigAxe.bullseye.percent[0] = hitPercent(result.bigAxe.bullseye.count[0], result.bigAxe.bullseye.attempts);
+  result.bigAxe.bullseye.percent[1] = hitPercent(result.bigAxe.bullseye.count[1], result.bigAxe.bullseye.attempts);
+  result.bigAxe.bullseye.percent[3] = hitPercent(result.bigAxe.bullseye.count[3], result.bigAxe.bullseye.attempts);
+  result.bigAxe.bullseye.percent[5] = hitPercent(result.bigAxe.bullseye.count[5], result.bigAxe.bullseye.attempts);
+
+  result.bigAxe.clutch.scorePerAxe = scorePerAxe(result.bigAxe.clutch.totalScore, result.bigAxe.clutch.attempts);
+  result.bigAxe.clutch.percent[0] = hitPercent(result.bigAxe.clutch.count[0], result.bigAxe.clutch.attempts);
+  result.bigAxe.clutch.percent[5] = hitPercent(result.bigAxe.clutch.count[5], result.bigAxe.clutch.attempts);
+  result.bigAxe.clutch.percent[7] = hitPercent(result.bigAxe.clutch.count[7], result.bigAxe.clutch.attempts);
+
+  return result;
+}
+
+export function getAllData(db) {
   const profiles = db.rows(`
     SELECT * FROM profiles
     ORDER BY name ASC
   `);
 
-  const seasons = db.rows(`
-    SELECT * FROM seasons
-    ORDER BY ruleset DESC, seasonId ASC
-  `);
-
-  const matches = db.rows(`
-    SELECT * FROM matches
-    WHERE status = :status
-    ORDER BY seasonId ASC, weekId ASC, matchId ASC
-  `, { status: enums.matchStatus.processed });
-
-  const throws = db.rows(`
-    SELECT * FROM throws
-    ORDER BY matchId ASC, roundId ASC, throwId ASC
-  `);
-
-  return {
-    profile: profiles.find(x => x.profileId === PROFILE_ID),
-    premier: {
-      stats: {},
-      seasons: []
-    },
-    standard: {
-      stats: {},
-      seasons: []
-    }
+  const result = {
+    profile: profiles.find(p => p.profileId === PROFILE_ID),
   };
+
+  for (const ruleset of Object.values(enums.ruleset)) {
+    const career = result[ruleset] = {
+      stats: {},
+      seasons: []
+    };
+
+    const seasons = db.rows(`
+      SELECT * FROM seasons
+      WHERE ruleset = :ruleset
+    `, { ruleset });
+
+    for (const s of seasons) {
+      const season = {
+        ...s,
+        stats: {},
+        weeks: []
+      };
+
+      const weeks = db.rows(`
+        SELECT DISTINCT weekId FROM matches
+        WHERE seasonId = :seasonId
+        ORDER BY weekId ASC
+      `, { seasonId: s.seasonId });
+
+      for (const { weekId } of weeks) {
+        const week = {
+          weekId,
+          stats: {},
+          matches: []
+        };
+
+        const matches = db.rows(`
+          SELECT * FROM matches
+          WHERE status = :status AND seasonId = :seasonId AND weekId = :weekId
+          ORDER BY matchID ASC
+        `, { status: enums.matchStatus.processed, seasonId: s.seasonId, weekId });
+
+        for (const m of matches) {
+          const match = {
+            ...m,
+            opponentName: profiles[m.opponentId].name,
+            stats: {},
+            rounds: []
+          };
+
+          const rounds = db.rows(`
+            SELECT * FROM rounds
+            WHERE matchId = :matchId
+            ORDER BY roundId ASC
+          `, { matchId: m.matchId });
+
+          for (const r of rounds) {
+            const round = {
+              ...r,
+              throws: []
+            };
+
+            const throws = db.rows(`
+              SELECT * FROM throws
+              WHERE matchId = :matchId, roundId = :roundId
+              ORDER BY throwId ASC
+            `, { matchId: m.matchId, roundId: r.roundId });
+
+            for (const { tool, target, score } of throws) {
+              round.throws.push({ tool, target, score});
+            }
+
+            match.rounds.push(round);
+          }
+
+          match.stats = getStats(match.rounds.flatMap(r => r.throws));
+
+          week.matches.push(match);
+        }
+
+        week.stats = getStats(week.matches.flatMap(m => m.rounds.flatMap(r => r.throws)));
+
+        season.weeks.push(week);
+      }
+
+      season.stats = getStats(season.weeks.flatMap(w => w.matches.flatMap(m => m.rounds.flatMap(r => r.throws))));
+
+      career.seasons.push(season);
+    }
+
+    career.stats = getStats(career.seasons.flatMap(s => s.weeks.flatMap(w => w.matches.flatMap(m => m.rounds.flatMap(r => r.throws)))));
+  }
+
+  return result;
 };
