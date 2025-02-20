@@ -6,9 +6,9 @@
 }
 
 :root {
-  --main: hsl(205, 75%, 60%);
+  --main: hsl(205, 75%, 50%);
   --dark: #404040;
-  --highlight: hsl(55, 100%, 60%);
+  --highlight: hsl(55, 100%, 50%);
   --content-width: 800px;
   font-size: 16px;
   font-family: monospace;

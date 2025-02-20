@@ -360,11 +360,12 @@ export const tearDown = async (start, db, browser) => {
 // Build
 
 export const getAllData = (db) => {
-  const result = {
-    profile: {
-      id: PROFILE_ID
-    }
-  };
+  const profiles = db.rows(`SELECT * FROM profiles`);
+  const seasons = db.rows(`SELECT * FROM seasons`);
 
-  return result;
+  return {
+    profile: profiles.find(x => x.profileId === PROFILE_ID),
+    opponents: profiles.filter(x => x.profileId !== PROFILE_ID),
+    seasons
+  };
 };

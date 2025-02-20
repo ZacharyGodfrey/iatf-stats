@@ -1,22 +1,47 @@
-<h2>Profile Header</h2>
+<h2>Profile: {{data.profile.name}}</h2>
 
-<p>Profile ID: {{data.profile.id}}</p>
+<p>ID: {{data.profile.profileId}}</p>
 
 <figure>
-  <table>
+  <table id="seasons">
     <thead>
       <tr>
-        <th>Alpha</th>
-        <th>Bravo</th>
-        <th>Charlie</th>
+        <th>Year</th>
+        <th>Ruleset</th>
+        <th>Name</th>
+        <th>Season Rank</th>
+        <th>Playoff Rank</th>
       </tr>
     </thead>
     <tbody>
+      {{#data.seasons}}
       <tr>
-        <td>One</td>
-        <td>Two</td>
-        <td>Three</td>
+        <td>{{year}}</td>
+        <td>{{ruleset}}</td>
+        <td>{{name}}</td>
+        <td>{{seasonRank}}</td>
+        <td>{{playoffRank}}</td>
       </tr>
+      {{/data.seasons}}
+    </tbody>
+  </table>
+</figure>
+
+<figure>
+  <table id="opponents">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#data.opponents}}
+      <tr>
+        <td>{{profileId}}
+        <td>{{name}}</td>
+      </tr>
+      {{/data.opponents}}
     </tbody>
   </table>
 </figure>
