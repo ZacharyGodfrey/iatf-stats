@@ -6,7 +6,9 @@
 }
 
 :root {
+  --main: hsl(205, 75%, 60%);
   --dark: #404040;
+  --highlight: hsl(55, 100%, 60%);
   --content-width: 800px;
   font-size: 16px;
   font-family: monospace;
@@ -15,8 +17,8 @@
 }
 
 ::selection {
-  color: black;
-  background: yellow;
+  color: var(--dark);
+  background: var(--highlight);
 }
 
 :first-child { margin-block-start: 0 !important; }
@@ -38,7 +40,7 @@ section {
 header {
   padding: 0.5rem 1rem;
   color: white;
-  background: var(--dark);
+  background: var(--main);
 }
 
 main {
