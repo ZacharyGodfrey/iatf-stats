@@ -376,9 +376,13 @@ export const getAllData = (db) => {
 
   return {
     profile: profiles.find(x => x.profileId === PROFILE_ID),
-    opponents: profiles.filter(x => x.profileId !== PROFILE_ID),
-    seasons,
-    matches,
-    throws
+    premier: {
+      stats: {},
+      seasons: []
+    },
+    standard: {
+      stats: {},
+      seasons: []
+    }
   };
 };

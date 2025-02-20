@@ -45,11 +45,6 @@ header {
   background: var(--main);
 }
 
-nav {
-  padding: 1rem;
-  background: var(--grey);
-}
-
 main {
   flex: 1;
   padding: 2rem 1rem;
@@ -123,3 +118,5 @@ th, td {
   padding: 0.25rem;
   text-align: center;
 }
+
+.text-right { text-align: right; }

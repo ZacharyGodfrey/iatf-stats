@@ -1,5 +1,5 @@
 <figure>
-  <table id="seasons">
+  <table>
     <thead>
       <tr>
         <th>Year</th>
@@ -10,7 +10,7 @@
       </tr>
     </thead>
     <tbody>
-      {{#data.seasons}}
+      {{#seasons}}
       <tr>
         <td>{{year}}</td>
         <td>{{ruleset}}</td>
@@ -18,7 +18,7 @@
         <td>{{seasonRank}}</td>
         <td>{{playoffRank}}</td>
       </tr>
-      {{/data.seasons}}
+      {{/seasons}}
     </tbody>
   </table>
 </figure>
