@@ -56,24 +56,31 @@ footer {
   background: var(--dark);
 }
 
-section, hgroup, h1, h2, p, hr, details, summary, figure, table {
+section, hgroup, h1, h2, h3, p, hr, details, summary, figure, table {
   margin-block: 2rem;
 }
 
-hgroup > :is(h1, h2, p) {
+hgroup > :is(h1, h2, h3, p) {
   margin-block: 0;
 }
 
-h1, h2, p {
+h1, h2, h3, p {
   line-height: 1.5;
 }
 
 h1 {
   font-size: 2rem;
+  font-weight: bold;
 }
 
 h2 {
   font-size: 1.5rem;
+  font-weight: bold;
+}
+
+h3 {
+  font-size: 1.25rem;
+  font-weight: bold;
 }
 
 p {
