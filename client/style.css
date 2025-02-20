@@ -108,6 +108,7 @@ a.normal {
 img {
   display: block;
   max-width: 100%;
+  border-radius: 50%;
 }
 
 figure {
