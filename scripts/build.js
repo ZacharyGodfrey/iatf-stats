@@ -15,10 +15,6 @@ const shell = readFile('client/shell.html')
   .replace('/* icon */', readFile('client/icon.png', 'base64'))
   .replace('/* style */', readFile('client/style.css'));
 
-// const partials = {
-//   profileHeader: readFile('client/partials/profile-header.html'),
-// };
-
 const partials = listFiles('client/partials/*.html').reduce((result, fileName) => {
   const name = fileName.match(/\/(?<name>[a-z\-]+)\.html/i).groups.name;
 
