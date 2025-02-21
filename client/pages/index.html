@@ -8,10 +8,28 @@ description: ""
 
 <hr>
 
-<p>
-  <a href="/premier">Premier Stats</a>
-</p>
+<h2>Premier Career Data</h2>
+
+{{#data.premier}}
+
+{{>stats}}
 
 <p>
-  <a href="/standard">Standard Stats</a>
+  <a href="/premier">View Premier Seasons</a>
 </p>
+
+{{/data.premier}}
+
+<hr>
+
+<h2>Standard Career Data</h2>
+
+{{#data.standard}}
+
+{{>stats}}
+
+<p>
+  <a href="/standard">View Standard Seasons</a>
+</p>
+
+{{/data.standard}}
