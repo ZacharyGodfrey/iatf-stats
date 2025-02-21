@@ -135,4 +135,31 @@ th, td {
 }
 
 .text-center { text-align: center; }
-.text-right { text-align: right; }
+.text-right  { text-align: right; }
+
+.grid {
+  display: grid;
+  column-gap: 1rem;
+  row-gap: 1rem;
+  justify-items: stretch; /* cell content X */
+  align-items: start; /* cell content Y */
+  justify-content: stretch; /* column spacing X */
+  align-content: start; /* row spacing Y */
+}
+
+.grid > * {
+  width: 100%;
+  margin: 0 !important;
+}
+
+.grid.items-y-center { align-items: center; }
+
+.grid.auto-fill { grid-template-columns: auto 1fr; }
+
+/* Small Screens */
+@media screen and (max-width: 800px) {
+  .grid.stack {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+}
