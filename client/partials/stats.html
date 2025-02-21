@@ -4,22 +4,30 @@
   <table>
     <tbody>
       <tr>
-        <th colspan="2">Hatchet</th>
+        <th colspan="4">Hatchet</th>
       </tr>
 
       <tr>
-        <td>Attempts</td>
-        <td>{{hatchet.overall.attempts}}</td>
+        <th colspan="2">Bullseye</th>
+        <th colspan="2">Clutch</th>
       </tr>
 
       <tr>
-        <td>Total Score</td>
-        <td>{{hatchet.overall.totalScore}}</td>
+        <td>{{hatchet.bullseye.attempts}}</td>
+        <td colspan="2">Attempts</td>
+        <td>{{hatchet.clutch.attempts}}</td>
       </tr>
 
       <tr>
-        <td>Score Per Axe</td>
-        <td>{{hatchet.overall.scorePerAxe}}</td>
+        <td>{{hatchet.bullseye.totalScore}}</td>
+        <td colspan="2">Total Score</td>
+        <td>{{hatchet.clutch.totalScore}}</td>
+      </tr>
+
+      <tr>
+        <td>{{hatchet.bullseye.scorePerAxe}}</td>
+        <td colspan="2">Score Per Axe</td>
+        <td>{{hatchet.clutch.scorePerAxe}}</td>
       </tr>
     </tbody>
 
