@@ -7,6 +7,7 @@
         <th colspan="2">Discipline</th>
         <th>Hit Rate</th>
         <th>Score Per Axe</th>
+        <th>Attempts</th>
       </tr>
     </thead>
 
@@ -16,12 +17,14 @@
         <td>Bullseye</td>
         <td>{{hatchet.bullseye.percent.5}}%</td>
         <td>{{hatchet.bullseye.scorePerAxe}}</td>
+        <td>{{hatchet.bullseye.attempts}}</td>
       </tr>
 
       <tr>
         <td>Clutch (5)</td>
         <td>{{hatchet.clutch.percent.5}}%</td>
         <td rowspan="2">{{hatchet.clutch.scorePerAxe}}</td>
+        <td rowspan="2">{{hatchet.clutch.attempts}}</td>
       </tr>
 
       <tr>
@@ -34,20 +37,21 @@
       <tr>
         <td rowspan="3">Big Axe</td>
         <td>Bullseye</td>
-        <td>{{bigAxe.bullseye.attempts}}</td>
+        <td>{{bigAxe.bullseye.percent.5}}%</td>
         <td>{{bigAxe.bullseye.scorePerAxe}}</td>
+        <td>{{bigAxe.bullseye.attempts}}</td>
       </tr>
 
       <tr>
-        <td>Clutch</td>
-        <td>{{bigAxe.clutch.attempts}}</td>
-        <td>{{bigAxe.clutch.scorePerAxe}}</td>
+        <td>Clutch (5)</td>
+        <td>{{bigAxe.clutch.percent.5}}%</td>
+        <td rowspan="2">{{bigAxe.clutch.scorePerAxe}}</td>
+        <td rowspan="2">{{bigAxe.clutch.attempts}}</td>
       </tr>
 
       <tr>
-        <td>Combined</td>
-        <td>{{bigAxe.overall.attempts}}</td>
-        <td>{{bigAxe.overall.scorePerAxe}}</td>
+        <td>Clutch (7)</td>
+        <td>{{bigAxe.clutch.percent.7}}%</td>
       </tr>
     </tbody>
   </table>
