@@ -2,6 +2,35 @@
 
 <figure>
   <table>
+    <thead>
+      <tr>
+        <th colspan="2"></th>
+        <th>Attempts</th>
+        <th>Total Score</th>
+        <th>Score Per Axe</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td rowspan="2">Hatchet</td>
+        <td>Bullseye</td>
+        <td>{{hatchet.bullseye.attempts}}</td>
+        <td>{{hatchet.bullseye.totalScore}}</td>
+        <td>{{hatchet.bullseye.scorePerAxe}}</td>
+      </tr>
+
+      <tr>
+        <td>Clutch</td>
+        <td>{{hatchet.clutch.attempts}}</td>
+        <td>{{hatchet.clutch.totalScore}}</td>
+        <td>{{hatchet.clutch.scorePerAxe}}</td>
+      </tr>
+    </tbody>
+  </table>
+</figure>
+
+<figure>
+  <table>
     <tbody>
       <tr>
         <th colspan="4">Hatchet</th>

@@ -6,7 +6,7 @@
 }
 
 :root {
-  --main:      hsl(85,  45%, 45%);
+  --main:      hsl(85,  30%, 45%);
   --grey:      hsl( 0,   0%, 90%);
   --dark:      hsl( 0,   0%, 30%);
   --highlight: hsl(55, 100%, 45%);
@@ -126,8 +126,7 @@ table {
 }
 
 thead, th {
-  color: white;
-  background: var(--main);
+  background: var(--grey);
 }
 
 th, td {
