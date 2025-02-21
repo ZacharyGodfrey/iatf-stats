@@ -14,9 +14,11 @@ description: ""
 
 {{>stats}}
 
-<p>
-  <a href="/premier">View Premier Seasons</a>
-</p>
+<details>
+  <summary>Seasons</summary>
+
+  {{>seasonsTable}}
+</details>
 
 {{/data.premier}}
 
@@ -28,8 +30,10 @@ description: ""
 
 {{>stats}}
 
-<p>
-  <a href="/standard">View Standard Seasons</a>
-</p>
+<details>
+  <summary>Seasons</summary>
+
+  {{>seasonsTable}}
+</details>
 
 {{/data.standard}}
