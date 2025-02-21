@@ -33,43 +33,59 @@
 
     <tbody>
       <tr>
-        <th colspan="2">Big Axe</th>
+        <th colspan="4">Big Axe</th>
       </tr>
 
       <tr>
-        <td>Attempts</td>
-        <td>{{bigAxe.overall.attempts}}</td>
+        <th colspan="2">Bullseye</th>
+        <th colspan="2">Clutch</th>
       </tr>
 
       <tr>
-        <td>Total Score</td>
-        <td>{{bigAxe.overall.totalScore}}</td>
+        <td>{{bigAxe.bullseye.attempts}}</td>
+        <td colspan="2">Attempts</td>
+        <td>{{bigAxe.clutch.attempts}}</td>
       </tr>
 
       <tr>
-        <td>Score Per Axe</td>
-        <td>{{bigAxe.overall.scorePerAxe}}</td>
+        <td>{{bigAxe.bullseye.totalScore}}</td>
+        <td colspan="2">Total Score</td>
+        <td>{{bigAxe.clutch.totalScore}}</td>
+      </tr>
+
+      <tr>
+        <td>{{bigAxe.bullseye.scorePerAxe}}</td>
+        <td colspan="2">Score Per Axe</td>
+        <td>{{bigAxe.clutch.scorePerAxe}}</td>
       </tr>
     </tbody>
 
     <tbody>
       <tr>
-        <th colspan="2">Combined</th>
+        <th colspan="4">Combined</th>
       </tr>
 
       <tr>
-        <td>Attempts</td>
-        <td>{{overall.attempts}}</td>
+        <th colspan="2">Hatchet</th>
+        <th colspan="2">Big Axe</th>
       </tr>
 
       <tr>
-        <td>Total Score</td>
-        <td>{{overall.totalScore}}</td>
+        <td>{{hatchet.overall.attempts}}</td>
+        <td colspan="2">Attempts</td>
+        <td>{{bigAxe.overall.attempts}}</td>
       </tr>
 
       <tr>
-        <td>Score Per Axe</td>
-        <td>{{overall.scorePerAxe}}</td>
+        <td>{{hatchet.overall.totalScore}}</td>
+        <td colspan="2">Total Score</td>
+        <td>{{bigAxe.overall.totalScore}}</td>
+      </tr>
+
+      <tr>
+        <td>{{hatchet.overall.scorePerAxe}}</td>
+        <td colspan="2">Score Per Axe</td>
+        <td>{{bigAxe.overall.scorePerAxe}}</td>
       </tr>
     </tbody>
   </table>
