@@ -14,33 +14,33 @@ const TIMEOUT = 2000;
 
 // Helpers
 
-const reactPageState = (page) => {
+function reactPageState(page) {
   return page.evaluate(() => {
     return document.getElementById('root')
       ._reactRootContainer._internalRoot
       .current.memoizedState.element.props
       .store.getState();
   });
-};
+}
 
-const isDesiredResponse = (method, status, url) => {
+function isDesiredResponse(method, status, url) {
   return (response) => {
     return response.request().method() === method
       && response.status() === status
       && response.url() === url;
   };
-};
+}
 
-const fetchPlayerData = async (page, profileId) => {
+async function fetchPlayerData(page, profileId) {
   await page.goto(`https://axescores.com/player/${profileId}`, { waitUntil: 'networkidle2' });
   await page.waitForNetworkIdle();
 
   const state = await reactPageState(page);
 
   return state.player.playerData;
-};
+}
 
-const fetchMatchData = async (page, profileId, matchId) => {
+async function fetchMatchData(page, profileId, matchId) {
   const url = `https://axescores.com/player/${profileId}/${matchId}`;
   const apiUrl = `https://api.axescores.com/match/${matchId}/${profileId}`;
 
@@ -124,11 +124,11 @@ const fetchMatchData = async (page, profileId, matchId) => {
   });
 
   return result;
-};
+}
 
 // Scrape
 
-export const fetchProfileImage = async (profileId) => {
+export async function fetchProfileImage(profileId) {
   console.log(`===== Fetch Image ${profileId}`);
 
   const response = await fetch(`https://admin.axescores.com/pic/${profileId}`);
@@ -138,9 +138,9 @@ export const fetchProfileImage = async (profileId) => {
   console.log('Done.');
 
   return webpBuffer;
-};
+}
 
-export const discoverMatches = async (db, page, profileId) => {
+export async function discoverMatches(db, page, profileId) {
   console.log('===== Discover Matches');
 
   let seasonCount = 0, matchCount = 0;
@@ -203,9 +203,9 @@ export const discoverMatches = async (db, page, profileId) => {
   console.log(`Discovered ${matchCount} matches from ${seasonCount} seasons.`);
 
   console.log('Done.');
-};
+}
 
-export const processMatches = async (db, page, profileId) => {
+export async function processMatches(db, page, profileId) {
   console.log('===== Process Matches');
 
   const newMatches = db.rows(`
@@ -303,9 +303,81 @@ export const processMatches = async (db, page, profileId) => {
   }
 
   console.log('Done.');
-};
+}
 
-export const databaseReport = (db) => {
+export function exportFlattenedMatches(db) {
+  const profiles = db.rows(`
+    SELECT * FROM profiles
+  `).reduce((map, profile) => {
+    map[profile.profileId] = profile;
+
+    return map;
+  }, {});
+
+  const seasons = db.rows(`
+    SELECT * FROM seasons
+  `).reduce((map, season) => {
+    map[season.seasonId] = season;
+
+    return map;
+  });
+
+  const matches = db.rows(`
+    SELECT * FROM matches
+    WHERE status = '${enums.matchStatus.processed}'
+  `);
+
+  const result = [];
+
+  for (const match of matches) {
+    try {
+      const { seasonId, weekId, matchId, opponentId, score, outcome } = match;
+      const { year, ruleset, seasonRank, playoffRank, name: seasonName } = seasons[seasonId];
+      const { name: opponentName } = profiles[opponentId];
+
+      const rounds = db.rows(`
+        SELECT * FROM rounds
+        WHERE matchId = ${matchId}
+      `);
+
+      const throws = db.rows(`
+        SELECT * FROM throws
+        WHERE profileId = ${PROFILE_ID}
+        AND matchId = ${matchId}
+      `);
+
+      // const opponentThrows = db.rows(`
+      //   SELECT * FROM throws
+      //   WHERE profileId = ${opponentId}
+      //   AND matchId = ${matchId}
+      // `);
+
+      result.push({
+        ruleset,
+        year,
+        seasonId,
+        seasonName,
+        seasonRank,
+        playoffRank,
+        weekId,
+        matchId,
+        outcome,
+        total: score,
+        opponentId,
+        opponentName,
+        overtime: throws.some(x => x.tool === TOOL_BIG_AXE),
+        roundOutcomes: rounds.map(x => x.outcome),
+        roundTotals: rounds.map(x => x.score),
+      });
+    } catch (error) {
+      logError(error, { match })
+    }
+  }
+
+  writeFile('data/export.json', JSON.stringify(result, null, 2));
+}
+
+export function databaseReport(db) {
   console.log('===== Database Report');
 
   console.log('Profiles:');
@@ -341,9 +413,9 @@ export const databaseReport = (db) => {
   `));
 
   console.log('Done.');
-};
+}
 
-export const tearDown = async (start, db, browser) => {
+export async function tearDown(start, db, browser) {
   console.log('===== Tear Down');
 
   if (browser) {
@@ -361,7 +433,7 @@ export const tearDown = async (start, db, browser) => {
   }
 
   console.log('Done.');
-};
+}
 
 // Build
 
@@ -625,72 +697,4 @@ export function getAllData(db) {
   }
 
   return result;
-};
-
-export function exportFlattenedMatches(db) {
-  const profiles = db.rows(`
-    SELECT * FROM profiles
-  `).reduce((map, profile) => {
-    map[profile.profileId] = profile;
-
-    return map;
-  }, {});
-
-  const seasons = db.rows(`
-    SELECT * FROM seasons
-  `).reduce((map, season) => {
-    map[season.seasonId] = season;
-
-    return map;
-  });
-
-  const matches = db.rows(`
-    SELECT * FROM matches
-    WHERE status = '${enums.matchStatus.processed}'
-  `);
-
-  const result = [];
-
-  for (const match of matches) {
-    const { seasonId, weekId, matchId, opponentId, score, outcome } = match;
-    const { year, ruleset, seasonRank, playoffRank, name: seasonName } = seasons[seasonId];
-    const { name: opponentName } = profiles[opponentId];
-
-    const rounds = db.rows(`
-      SELECT * FROM rounds
-      WHERE matchId = ${matchId}
-    `);
-
-    const throws = db.rows(`
-      SELECT * FROM throws
-      WHERE profileId = ${PROFILE_ID}
-      AND matchId = ${matchId}
-    `);
-
-    // const opponentThrows = db.rows(`
-    //   SELECT * FROM throws
-    //   WHERE profileId = ${opponentId}
-    //   AND matchId = ${matchId}
-    // `);
-
-    result.push({
-      ruleset,
-      year,
-      seasonId,
-      seasonName,
-      seasonRank,
-      playoffRank,
-      weekId,
-      matchId,
-      outcome,
-      total: score,
-      opponentId,
-      opponentName,
-      overtime: throws.some(x => x.tool === TOOL_BIG_AXE),
-      roundOutcomes: rounds.map(x => x.outcome),
-      roundTotals: rounds.map(x => x.score),
-    });
-  }
-
-  writeFile('data/export.json', JSON.stringify(result, null, 2));
 }
