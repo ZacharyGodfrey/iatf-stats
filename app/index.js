@@ -129,7 +129,7 @@ async function fetchMatchData(page, profileId, matchId) {
 // Scrape
 
 export async function fetchProfileImage(profileId) {
-  console.log(`===== Fetch Image ${profileId}`);
+  console.log(`Fetching image ${profileId}`);
 
   const response = await fetch(`https://admin.axescores.com/pic/${profileId}`);
   const originalBuffer = await response.arrayBuffer();

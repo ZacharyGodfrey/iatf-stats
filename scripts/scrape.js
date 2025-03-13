@@ -1,6 +1,7 @@
 import { database } from '../lib/database.js';
 import { launchBrowser, userAgent } from '../lib/browser.js';
 import { writeFile } from '../lib/file.js';
+import { logError } from '../lib/miscellaneous.js';
 import {
   PROFILE_ID,
   fetchProfileImage,
@@ -17,9 +18,14 @@ const page = await browser.newPage();
 
 await page.setUserAgent(userAgent);
 
-await fetchProfileImage(PROFILE_ID).then((image) => {
-  writeFile(`data/images/${PROFILE_ID}.webp`, image, null);
-});
+for (const { profileId } of db.rows(`SELECT profileId FROM profiles`)) {
+  await fetchProfileImage(profileId).then((image) => {
+    writeFile(`data/images/${profileId}.webp`, image, null);
+  }).catch((error) => {
+    logError(error, { profileId })
+  });
+}
+
 
 await discoverMatches(db, page, PROFILE_ID);
 
