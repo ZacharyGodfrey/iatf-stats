@@ -329,6 +329,11 @@ export function exportFlattenedMatches(db) {
 
   const result = [];
 
+  const outcomes = {
+    [enums.outcome.win]: 'Win',
+    [enums.outcome.loss]: 'Loss',
+  };
+
   for (const match of matches) {
     try {
       const { seasonId, weekId, matchId, opponentId, score, outcome } = match;
@@ -363,7 +368,7 @@ export function exportFlattenedMatches(db) {
         playoffRank,
         weekId,
         matchId,
-        outcome,
+        outcome: outcomes[outcome] ?? outcome,
         total: score,
         opponentId,
         opponentName,
