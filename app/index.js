@@ -264,11 +264,20 @@ export const processMatches = async (db, page, profileId) => {
 
       for (const row of match.profile.throws) {
         db.run(`
-          INSERT INTO throws (matchId, roundId, throwId, tool, target, score)
-          VALUES (:matchId, :roundId, :throwId, :tool, :target, :score)
-          ON CONFLICT (matchId, roundId, throwId) DO UPDATE
+          INSERT INTO throws (profileId, matchId, roundId, throwId, tool, target, score)
+          VALUES (:profileId, :matchId, :roundId, :throwId, :tool, :target, :score)
+          ON CONFLICT (profileId, matchId, roundId, throwId) DO UPDATE
           SET tool = :tool, target = :target, score = :score
-        `, row);
+        `, { ...row, profileId: match.profile.profileId });
+      }
+
+      for (const row of match.opponent.throws) {
+        db.run(`
+          INSERT INTO throws (profileId, matchId, roundId, throwId, tool, target, score)
+          VALUES (:profileId, :matchId, :roundId, :throwId, :tool, :target, :score)
+          ON CONFLICT (profileId, matchId, roundId, throwId) DO UPDATE
+          SET tool = :tool, target = :target, score = :score
+        `, { ...row, profileId: match.opponent.profileId });
       }
 
       db.run(`
@@ -317,8 +326,11 @@ export const databaseReport = (db) => {
     LIMIT 12
   `));
 
-  console.log('Throws Count:');
-  console.log(db.row(`SELECT COUNT(*) AS count FROM throws`).count);
+  console.log('My Throws Count:');
+  console.log(db.row(`SELECT COUNT(*) AS count FROM throws WHERE profileId = ?`, [PROFILE_ID]).count);
+
+  console.log('Opponents Throws Count:');
+  console.log(db.row(`SELECT COUNT(*) AS count FROM throws WHERE profileId != ?`, [PROFILE_ID]).count);
 
   console.log('Last 15 Throws:');
   console.table(db.rows(`
@@ -582,9 +594,9 @@ export function getAllData(db) {
 
             const throws = db.rows(`
               SELECT * FROM throws
-              WHERE matchId = :matchId AND roundId = :roundId
+              WHERE profileId = :profileId AND matchId = :matchId AND roundId = :roundId
               ORDER BY throwId ASC
-            `, { matchId: m.matchId, roundId: r.roundId });
+            `, { profileId: PROFILE_ID, matchId: m.matchId, roundId: r.roundId });
 
             for (const { tool, target, score } of throws) {
               round.throws.push({ tool, target, score});
