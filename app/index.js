@@ -370,9 +370,9 @@ export function exportFlattenedMatches(db) {
         overtime: throws.some(x => x.tool === TOOL_BIG_AXE),
         roundOutcomes: rounds.map(x => x.outcome),
         roundTotals: rounds.map(x => x.score),
-        opponentRoundTotals: rounds.map(x => sum(opponentThrows.filter(y => y.roundId === x.roundId))),
-        throws,
-        opponentThrows,
+        opponentRoundTotals: rounds.map(x => sum(opponentThrows.filter(y => y.roundId === x.roundId).map(y => y.score))),
+        throws: throws.map(x => x.score),
+        opponentThrows: opponentThrows.map(x => x.score),
       });
     } catch (error) {
       logError(error, { match })
