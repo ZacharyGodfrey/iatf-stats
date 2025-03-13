@@ -320,7 +320,7 @@ export function exportFlattenedMatches(db) {
     map[season.seasonId] = season;
 
     return map;
-  });
+  }, {});
 
   const matches = db.rows(`
     SELECT * FROM matches
