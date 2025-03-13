@@ -344,13 +344,15 @@ export function exportFlattenedMatches(db) {
         SELECT * FROM throws
         WHERE profileId = ${PROFILE_ID}
         AND matchId = ${matchId}
+        ORDER BY roundId ASC, throwId ASC
       `);
 
-      // const opponentThrows = db.rows(`
-      //   SELECT * FROM throws
-      //   WHERE profileId = ${opponentId}
-      //   AND matchId = ${matchId}
-      // `);
+      const opponentThrows = db.rows(`
+        SELECT * FROM throws
+        WHERE profileId = ${opponentId}
+        AND matchId = ${matchId}
+        ORDER BY roundId ASC, throwId ASC
+      `);
 
       result.push({
         ruleset,
@@ -368,6 +370,8 @@ export function exportFlattenedMatches(db) {
         overtime: throws.some(x => x.tool === TOOL_BIG_AXE),
         roundOutcomes: rounds.map(x => x.outcome),
         roundTotals: rounds.map(x => x.score),
+        throws,
+        opponentThrows
       });
     } catch (error) {
       logError(error, { match })
