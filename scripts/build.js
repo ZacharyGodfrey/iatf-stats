@@ -11,6 +11,7 @@ const db = database();
 
 emptyFolder(OUTPUT_DIR);
 copyFolder('data/images', OUTPUT_DIR);
+copyFolder('data/export', OUTPUT_DIR);
 
 const shell = readFile('client/shell.html')
   .replace('/* icon */', readFile('client/icon.png', 'base64'))

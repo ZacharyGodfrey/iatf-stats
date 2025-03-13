@@ -374,7 +374,7 @@ export function exportFlattenedMatches(db) {
     }
   }
 
-  writeFile('data/export.json', JSON.stringify(result, null, 2));
+  writeFile('data/export/matches.json', JSON.stringify(result, null, 2));
 }
 
 export function databaseReport(db) {
