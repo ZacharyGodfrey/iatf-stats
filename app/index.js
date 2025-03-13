@@ -1,5 +1,6 @@
 import { logError, imageToWebp, round } from '../lib/miscellaneous.js';
 import { enums } from '../lib/database.js';
+import { writeFile } from '../lib/file.js';
 
 export const PROFILE_ID = 1207260;
 
@@ -625,3 +626,71 @@ export function getAllData(db) {
 
   return result;
 };
+
+export function exportFlattenedMatches(db) {
+  const profiles = db.rows(`
+    SELECT * FROM profiles
+  `).reduce((map, profile) => {
+    map[profile.profileId] = profile;
+
+    return map;
+  }, {});
+
+  const seasons = db.rows(`
+    SELECT * FROM seasons
+  `).reduce((map, season) => {
+    map[season.seasonId] = season;
+
+    return map;
+  });
+
+  const matches = db.rows(`
+    SELECT * FROM matches
+    WHERE status = '${enums.matchStatus.processed}'
+  `);
+
+  const result = [];
+
+  for (const match of matches) {
+    const { seasonId, weekId, matchId, opponentId, score, outcome } = match;
+    const { year, ruleset, seasonRank, playoffRank, name: seasonName } = seasons[seasonId];
+    const { name: opponentName } = profiles[opponentId];
+
+    const rounds = db.rows(`
+      SELECT * FROM rounds
+      WHERE matchId = ${matchId}
+    `);
+
+    const throws = db.rows(`
+      SELECT * FROM throws
+      WHERE profileId = ${PROFILE_ID}
+      AND matchId = ${matchId}
+    `);
+
+    // const opponentThrows = db.rows(`
+    //   SELECT * FROM throws
+    //   WHERE profileId = ${opponentId}
+    //   AND matchId = ${matchId}
+    // `);
+
+    result.push({
+      ruleset,
+      year,
+      seasonId,
+      seasonName,
+      seasonRank,
+      playoffRank,
+      weekId,
+      matchId,
+      outcome,
+      total: score,
+      opponentId,
+      opponentName,
+      overtime: throws.some(x => x.tool === TOOL_BIG_AXE),
+      roundOutcomes: rounds.map(x => x.outcome),
+      roundTotals: rounds.map(x => x.score),
+    });
+  }
+
+  writeFile('data/export.json', JSON.stringify(result, null, 2));
+}
