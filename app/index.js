@@ -1,4 +1,4 @@
-import { logError, imageToWebp, round } from '../lib/miscellaneous.js';
+import { logError, imageToWebp, round, sum } from '../lib/miscellaneous.js';
 import { enums } from '../lib/database.js';
 import { writeFile } from '../lib/file.js';
 
@@ -370,8 +370,9 @@ export function exportFlattenedMatches(db) {
         overtime: throws.some(x => x.tool === TOOL_BIG_AXE),
         roundOutcomes: rounds.map(x => x.outcome),
         roundTotals: rounds.map(x => x.score),
+        opponentRoundTotals: rounds.map(x => sum(opponentThrows.filter(y => y.roundId === x.roundId))),
         throws,
-        opponentThrows
+        opponentThrows,
       });
     } catch (error) {
       logError(error, { match })
