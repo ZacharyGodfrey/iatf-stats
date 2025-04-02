@@ -429,7 +429,7 @@ export function exportCareerData(db) {
   `);
 
   for (const t of allThrows) {
-    const ruleset = result[t.ruleset] ?? result[t.ruleset] = { throws: [], seasons: {} };
+    const ruleset = career[t.ruleset] ?? career[t.ruleset] = { throws: [], seasons: {} };
     ruleset.throws.push(t);
 
     const season = ruleset.seasons[t.seasonId] ?? ruleset.seasons[t.seasonId] = { ...seasons[t.seasonId], throws: [], weeks: {} };
