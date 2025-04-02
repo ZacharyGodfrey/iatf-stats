@@ -428,6 +428,8 @@ export function exportCareerData(db) {
     ORDER BY m.seasonId, m.weekId, t.matchId, t.roundId, t.throwId
   `);
 
+  console.log(allThrows.slice(0, 1));
+
   for (const t of allThrows) {
     const ruleset = career[t.ruleset] ?? career[t.ruleset] = { throws: [], seasons: {} };
     ruleset.throws.push(t);
