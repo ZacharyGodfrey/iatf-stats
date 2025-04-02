@@ -127,12 +127,7 @@ async function fetchMatchData(page, profileId, matchId) {
 }
 
 export function getCareerData(db) {
-  const career = {
-    profile: db.row(`
-      SELECT * FROM profiles
-      WHERE profileId = ${PROFILE_ID}
-    `)
-  };
+  const career = {};
 
   const seasons = db.rows(`
     SELECT * FROM seasons
@@ -238,7 +233,13 @@ export function getCareerData(db) {
     }
   }
 
-  return career;
+  return {
+    profile: db.row(`
+      SELECT * FROM profiles
+      WHERE profileId = ${PROFILE_ID}
+    `),
+    ...career
+  };
 }
 
 // Scrape
