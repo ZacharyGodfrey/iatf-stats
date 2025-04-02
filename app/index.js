@@ -431,20 +431,44 @@ export function exportCareerData(db) {
   console.log(allThrows.slice(0, 1));
 
   for (const t of allThrows) {
-    const ruleset = career[t.ruleset] ?? career[t.ruleset] = { throws: [], seasons: {} };
+    const ruleset = career[t.ruleset] ?? (career[t.ruleset] = {
+      throws: [],
+      seasons: {}
+    });
+
     ruleset.throws.push(t);
 
-    const season = ruleset.seasons[t.seasonId] ?? ruleset.seasons[t.seasonId] = { ...seasons[t.seasonId], throws: [], weeks: {} };
+    const season = ruleset.seasons[t.seasonId] ?? (ruleset.seasons[t.seasonId] = {
+      ...seasons[t.seasonId],
+      throws: [],
+      weeks: {}
+    });
+
     season.throws.push(t);
 
-    const week = season.weeks[t.weekId] ?? season.weeks[t.weekId] = { throws: [], matches: {} };
+    const week = season.weeks[t.weekId] ?? (season.weeks[t.weekId] = {
+      throws: [],
+      matches: {}
+    });
+
     week.throws.push(t);
 
-    const match = week.matches[t.matchId] ?? week.matches[t.matchId] = { ...matches[t.matchId], throws: [], total: 0, rounds: {} };
+    const match = week.matches[t.matchId] ?? (week.matches[t.matchId] = {
+      ...matches[t.matchId],
+      throws: [],
+      total: 0,
+      rounds: {}
+    });
+
     match.throws.push(t);
     match.total += t.score;
 
-    const round = match.rounds[t.roundId] ?? match.rounds[t.roundId] = { ...rounds[`${t.matchId}-${t.roundId}`], throws: [], total: 0 };
+    const round = match.rounds[t.roundId] ?? (match.rounds[t.roundId] = {
+      ...rounds[`${t.matchId}-${t.roundId}`],
+      throws: [],
+      total: 0
+    });
+
     round.throws.push(t);
     round.total += t.score;
   }
