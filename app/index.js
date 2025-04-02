@@ -388,6 +388,96 @@ export function exportFlattenedMatches(db) {
   writeFile('data/export/matches.json', JSON.stringify(result, null, 2));
 }
 
+export function exportCareerData(db) {
+  const career = {};
+
+  const seasons = db.rows(`
+    SELECT * FROM seasons
+  `).reduce((map, season) => {
+    map[season.seasonId] = season;
+
+    return map;
+  }, {});
+
+  const matches = db.rows(`
+    SELECT * FROM matches
+    WHERE status = '${enums.matchStatus.processed}'
+  `).reduce((map, match) => {
+    map[match.matchId] = match;
+
+    return map;
+  }, {});
+
+  const rounds = db.rows(`
+    SELECT r.* FROM rounds AS r
+    LEFT JOIN matches AS m ON m.matchId = r.matchId
+    WHERE m.status = '${enums.matchStatus.processed}'
+  `).reduce((map, round) => {
+    map[`${round.matchId}-${round.roundId}`] = round;
+
+    return map;
+  }, {});
+
+  const allThrows = db.rows(`
+    SELECT s.ruleset, m.seasonId, m.weekId, m.opponentId, t.*
+    FROM throws AS t
+    LEFT JOIN matches AS m ON m.matchId = t.matchId
+    LEFT JOIN seasons AS s ON s.seasonId = m.seasonId
+    WHERE m.status = '${enums.matchStatus.processed}'
+    AND t.profileId = ${PROFILE_ID}
+    ORDER BY m.seasonId, m.weekId, t.matchId, t.roundId, t.throwId
+  `);
+
+  for (const t of allThrows) {
+    const ruleset = result[t.ruleset] ?? result[t.ruleset] = { throws: [], seasons: {} };
+    ruleset.throws.push(t);
+
+    const season = ruleset.seasons[t.seasonId] ?? ruleset.seasons[t.seasonId] = { ...seasons[t.seasonId], throws: [], weeks: {} };
+    season.throws.push(t);
+
+    const week = season.weeks[t.weekId] ?? season.weeks[t.weekId] = { throws: [], matches: {} };
+    week.throws.push(t);
+
+    const match = week.matches[t.matchId] ?? week.matches[t.matchId] = { ...matches[t.matchId], throws: [], total: 0, rounds: {} };
+    match.throws.push(t);
+    match.total += t.score;
+
+    const round = match.rounds[t.roundId] ?? match.rounds[t.roundId] = { ...rounds[`${t.matchId}-${t.roundId}`], throws: [], total: 0 };
+    round.throws.push(t);
+    round.total += t.score;
+  }
+
+  for (const ruleset of Object.values(career)) {
+    ruleset.stats = getStats(ruleset.throws);
+    ruleset.seasons = Object.values(ruleset.seasons);
+
+    delete ruleset.throws;
+
+    for (const season of ruleset.seasons) {
+      season.stats = getStats(season.throws);
+      season.weeks = Object.values(season.weeks);
+
+      delete season.throws;
+
+      for (const week of season.weeks) {
+        week.stats = getStats(week.throws);
+        week.matches = Object.values(week.matches);
+
+        delete week.throws;
+
+        for (const match of week.matches) {
+          match.stats = getStats(match.throws);
+          match.rounds = Object.values(match.rounds);
+
+          delete match.throws;
+        }
+      }
+    }
+  }
+
+  writeFile('data/export/career.json', JSON.stringify(career, null, 2));
+}
+
 export function databaseReport(db) {
   console.log('===== Database Report');
 

@@ -10,12 +10,11 @@ const start = Date.now();
 const db = database();
 
 emptyFolder(OUTPUT_DIR);
+copyFolder('client/static', OUTPUT_DIR);
 copyFolder('data/images', OUTPUT_DIR);
 copyFolder('data/export', OUTPUT_DIR);
 
-const shell = readFile('client/shell.html')
-  .replace('/* icon */', readFile('client/icon.png', 'base64'))
-  .replace('/* style */', readFile('client/style.css'));
+const shell = readFile('client/shell.html').replace('/* style */', readFile('client/style.css'));
 
 const partials = listFiles('client/partials/*.html').reduce((result, fileName) => {
   const name = fileName.match(/\/(?<name>[a-z\-]+)\.html/i).groups.name;
