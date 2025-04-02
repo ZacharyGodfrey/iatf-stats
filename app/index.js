@@ -126,6 +126,121 @@ async function fetchMatchData(page, profileId, matchId) {
   return result;
 }
 
+export function getCareerData(db) {
+  const career = {
+    profile: db.row(`
+      SELECT * FROM profiles
+      WHERE profileId = ${PROFILE_ID}
+    `)
+  };
+
+  const seasons = db.rows(`
+    SELECT * FROM seasons
+  `).reduce((map, season) => {
+    map[season.seasonId] = season;
+
+    return map;
+  }, {});
+
+  const matches = db.rows(`
+    SELECT * FROM matches
+    WHERE status = '${enums.matchStatus.processed}'
+  `).reduce((map, match) => {
+    map[match.matchId] = match;
+
+    return map;
+  }, {});
+
+  const rounds = db.rows(`
+    SELECT r.* FROM rounds AS r
+    LEFT JOIN matches AS m ON m.matchId = r.matchId
+    WHERE m.status = '${enums.matchStatus.processed}'
+  `).reduce((map, round) => {
+    map[`${round.matchId}-${round.roundId}`] = round;
+
+    return map;
+  }, {});
+
+  const allThrows = db.rows(`
+    SELECT s.ruleset, m.seasonId, m.weekId, m.opponentId, t.*
+    FROM throws AS t
+    LEFT JOIN matches AS m ON m.matchId = t.matchId
+    LEFT JOIN seasons AS s ON s.seasonId = m.seasonId
+    WHERE m.status = '${enums.matchStatus.processed}'
+    AND t.profileId = ${PROFILE_ID}
+    ORDER BY m.seasonId, m.weekId, t.matchId, t.roundId, t.throwId
+  `);
+
+  for (const t of allThrows) {
+    const ruleset = career[t.ruleset] ?? (career[t.ruleset] = {
+      throws: [],
+      seasons: {}
+    });
+
+    ruleset.throws.push(t);
+
+    const season = ruleset.seasons[t.seasonId] ?? (ruleset.seasons[t.seasonId] = {
+      ...seasons[t.seasonId],
+      throws: [],
+      weeks: {}
+    });
+
+    season.throws.push(t);
+
+    const week = season.weeks[t.weekId] ?? (season.weeks[t.weekId] = {
+      throws: [],
+      matches: {}
+    });
+
+    week.throws.push(t);
+
+    const match = week.matches[t.matchId] ?? (week.matches[t.matchId] = {
+      ...matches[t.matchId],
+      throws: [],
+      rounds: {}
+    });
+
+    match.throws.push(t);
+
+    const round = match.rounds[t.roundId] ?? (match.rounds[t.roundId] = {
+      ...rounds[`${t.matchId}-${t.roundId}`],
+      throws: []
+    });
+
+    round.throws.push(t);
+  }
+
+  for (const ruleset of Object.values(career)) {
+    ruleset.stats = getStats(ruleset.throws);
+    ruleset.seasons = Object.values(ruleset.seasons);
+
+    delete ruleset.throws;
+
+    for (const season of ruleset.seasons) {
+      season.stats = getStats(season.throws);
+      season.weeks = Object.values(season.weeks);
+
+      delete season.throws;
+
+      for (const week of season.weeks) {
+        week.stats = getStats(week.throws);
+        week.matches = Object.values(week.matches);
+
+        delete week.throws;
+
+        for (const match of week.matches) {
+          match.stats = getStats(match.throws);
+          match.rounds = Object.values(match.rounds);
+
+          delete match.throws;
+        }
+      }
+    }
+  }
+
+  return career;
+}
+
 // Scrape
 
 export async function fetchProfileImage(profileId) {
@@ -389,117 +504,7 @@ export function exportFlattenedMatches(db) {
 }
 
 export function exportCareerData(db) {
-  const career = {};
-
-  const seasons = db.rows(`
-    SELECT * FROM seasons
-  `).reduce((map, season) => {
-    map[season.seasonId] = season;
-
-    return map;
-  }, {});
-
-  const matches = db.rows(`
-    SELECT * FROM matches
-    WHERE status = '${enums.matchStatus.processed}'
-  `).reduce((map, match) => {
-    map[match.matchId] = match;
-
-    return map;
-  }, {});
-
-  const rounds = db.rows(`
-    SELECT r.* FROM rounds AS r
-    LEFT JOIN matches AS m ON m.matchId = r.matchId
-    WHERE m.status = '${enums.matchStatus.processed}'
-  `).reduce((map, round) => {
-    map[`${round.matchId}-${round.roundId}`] = round;
-
-    return map;
-  }, {});
-
-  const allThrows = db.rows(`
-    SELECT s.ruleset, m.seasonId, m.weekId, m.opponentId, t.*
-    FROM throws AS t
-    LEFT JOIN matches AS m ON m.matchId = t.matchId
-    LEFT JOIN seasons AS s ON s.seasonId = m.seasonId
-    WHERE m.status = '${enums.matchStatus.processed}'
-    AND t.profileId = ${PROFILE_ID}
-    ORDER BY m.seasonId, m.weekId, t.matchId, t.roundId, t.throwId
-  `);
-
-  console.log(allThrows.slice(0, 1));
-
-  for (const t of allThrows) {
-    const ruleset = career[t.ruleset] ?? (career[t.ruleset] = {
-      throws: [],
-      seasons: {}
-    });
-
-    ruleset.throws.push(t);
-
-    const season = ruleset.seasons[t.seasonId] ?? (ruleset.seasons[t.seasonId] = {
-      ...seasons[t.seasonId],
-      throws: [],
-      weeks: {}
-    });
-
-    season.throws.push(t);
-
-    const week = season.weeks[t.weekId] ?? (season.weeks[t.weekId] = {
-      throws: [],
-      matches: {}
-    });
-
-    week.throws.push(t);
-
-    const match = week.matches[t.matchId] ?? (week.matches[t.matchId] = {
-      ...matches[t.matchId],
-      throws: [],
-      total: 0,
-      rounds: {}
-    });
-
-    match.throws.push(t);
-    match.total += t.score;
-
-    const round = match.rounds[t.roundId] ?? (match.rounds[t.roundId] = {
-      ...rounds[`${t.matchId}-${t.roundId}`],
-      throws: [],
-      total: 0
-    });
-
-    round.throws.push(t);
-    round.total += t.score;
-  }
-
-  for (const ruleset of Object.values(career)) {
-    ruleset.stats = getStats(ruleset.throws);
-    ruleset.seasons = Object.values(ruleset.seasons);
-
-    delete ruleset.throws;
-
-    for (const season of ruleset.seasons) {
-      season.stats = getStats(season.throws);
-      season.weeks = Object.values(season.weeks);
-
-      delete season.throws;
-
-      for (const week of season.weeks) {
-        week.stats = getStats(week.throws);
-        week.matches = Object.values(week.matches);
-
-        delete week.throws;
-
-        for (const match of week.matches) {
-          match.stats = getStats(match.throws);
-          match.rounds = Object.values(match.rounds);
-
-          delete match.throws;
-        }
-      }
-    }
-  }
+  const career = getCareerData(db);
 
   writeFile('data/export/career.json', JSON.stringify(career, null, 2));
 }
@@ -717,111 +722,6 @@ function getStats(throws) {
   result.bigAxe.clutch.percent[0] = hitPercent(result.bigAxe.clutch.count[0], result.bigAxe.clutch.attempts);
   result.bigAxe.clutch.percent[5] = hitPercent(result.bigAxe.clutch.count[5], result.bigAxe.clutch.attempts);
   result.bigAxe.clutch.percent[7] = hitPercent(result.bigAxe.clutch.count[7], result.bigAxe.clutch.attempts);
-
-  return result;
-}
-
-export function getAllData(db) {
-  const profiles = db.rows(`
-    SELECT * FROM profiles
-    ORDER BY name ASC
-  `).reduce((map, profile) => {
-    map[profile.profileId] = profile;
-
-    return map;
-  }, {});
-
-  const result = {
-    profile: profiles[PROFILE_ID],
-  };
-
-  for (const ruleset of Object.values(enums.ruleset)) {
-    const career = result[ruleset] = {
-      stats: {},
-      seasons: []
-    };
-
-    const seasons = db.rows(`
-      SELECT * FROM seasons
-      WHERE ruleset = :ruleset
-    `, { ruleset });
-
-    for (const s of seasons) {
-      const season = {
-        ...s,
-        stats: {},
-        weeks: []
-      };
-
-      const weeks = db.rows(`
-        SELECT DISTINCT weekId FROM matches
-        WHERE seasonId = :seasonId
-        ORDER BY weekId ASC
-      `, { seasonId: s.seasonId });
-
-      for (const { weekId } of weeks) {
-        const week = {
-          weekId,
-          stats: {},
-          matches: []
-        };
-
-        const matches = db.rows(`
-          SELECT * FROM matches
-          WHERE status = :status AND seasonId = :seasonId AND weekId = :weekId
-          ORDER BY matchID ASC
-        `, { status: enums.matchStatus.processed, seasonId: s.seasonId, weekId });
-
-        for (const m of matches) {
-          const match = {
-            ...m,
-            opponentName: profiles[m.opponentId].name,
-            stats: {},
-            rounds: []
-          };
-
-          const rounds = db.rows(`
-            SELECT * FROM rounds
-            WHERE matchId = :matchId
-            ORDER BY roundId ASC
-          `, { matchId: m.matchId });
-
-          for (const r of rounds) {
-            const round = {
-              ...r,
-              throws: []
-            };
-
-            const throws = db.rows(`
-              SELECT * FROM throws
-              WHERE profileId = :profileId AND matchId = :matchId AND roundId = :roundId
-              ORDER BY throwId ASC
-            `, { profileId: PROFILE_ID, matchId: m.matchId, roundId: r.roundId });
-
-            for (const { tool, target, score } of throws) {
-              round.throws.push({ tool, target, score});
-            }
-
-            match.rounds.push(round);
-          }
-
-          match.stats = getStats(match.rounds.flatMap(r => r.throws));
-
-          week.matches.push(match);
-        }
-
-        week.stats = getStats(week.matches.flatMap(m => m.rounds.flatMap(r => r.throws)));
-
-        season.weeks.push(week);
-      }
-
-      season.stats = getStats(season.weeks.flatMap(w => w.matches.flatMap(m => m.rounds.flatMap(r => r.throws))));
-
-      career.seasons.push(season);
-    }
-
-    career.stats = getStats(career.seasons.flatMap(s => s.weeks.flatMap(w => w.matches.flatMap(m => m.rounds.flatMap(r => r.throws)))));
-  }
 
   return result;
 }

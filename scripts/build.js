@@ -2,7 +2,7 @@ import { config } from '../client/config.js';
 import { database } from '../lib/database.js';
 import { emptyFolder, copyFolder, readFile, listFiles, writeFile } from '../lib/file.js';
 import { parseMetadata, renderMustache } from '../lib/render.js';
-import { getAllData, tearDown } from '../app/index.js';
+import { getCareerData, tearDown } from '../app/index.js';
 
 const OUTPUT_DIR = 'dist';
 
@@ -24,12 +24,12 @@ const partials = listFiles('client/partials/*.html').reduce((result, fileName) =
   return result;
 }, {});
 
-const allData = getAllData(db);
+const careerData = getCareerData(db);
 
 for (const filePath of listFiles('client/pages/**/*.html')) {
   const { meta, content } = parseMetadata(readFile(filePath));
   const path = `${OUTPUT_DIR}/${meta.url}`;
-  const data = { ...config, page: meta, data: allData };
+  const data = { ...config, page: meta, data: careerData };
   const output = renderMustache(shell, data, { ...partials, content });
 
   console.log(`Writing page: ${path}`);
