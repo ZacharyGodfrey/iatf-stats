@@ -6,9 +6,11 @@
 	"scripts": {
 		"scrape": "node ./scripts/scrape.js",
 		"report": "node ./scripts/report.js",
-		"build": "cd ./client && npm run build"
+		"build": "astro build --root ./client",
+		"dev": "astro dev --root ./client"
 	},
 	"dependencies": {
+		"astro": "^5.5.6",
 		"better-sqlite3": "^9.0.0",
 		"fs-extra": "^9.0.1",
 		"glob": "^10.3.10",
