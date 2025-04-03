@@ -1,0 +1,34 @@
+---
+
+export interface Props {
+	seasons: any[]
+};
+
+const { seasons }: Props = Astro.props;
+
+---
+
+<figure>
+	<table>
+		<thead>
+			<tr>
+				<th>Year</th>
+				<th>Name</th>
+				<th>Season Rank</th>
+				<th>Playoff Rank</th>
+			</tr>
+		</thead>
+		<tbody>
+			{seasons.map(({ year, seasonId, name, seasonRank, playoffRank }) => (
+				<tr>
+					<td>{year}</td>
+					<td>
+						<a href={`/s/${seasonId}`}>{name}</a>
+					</td>
+					<td>{seasonRank}</td>
+					<td>{playoffRank}</td>
+				</tr>
+			))}
+		</tbody>
+	</table>
+</figure>

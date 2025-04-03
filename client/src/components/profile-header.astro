@@ -1,0 +1,23 @@
+---
+
+export interface Props {
+	profileId: number;
+	name: string;
+}
+
+const { profileId, name }: Props = Astro.props;
+
+---
+
+<div class="grid stack auto-fill items-y-center">
+	<div>
+		<img src={`/images/${profileId}.webp`} />
+	</div>
+
+	<div>
+		<hgroup>
+			<h1>{name}</h1>
+			<p>ID: {profileId}</p>
+		</hgroup>
+	</div>
+</div>

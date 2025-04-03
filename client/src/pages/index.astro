@@ -1,0 +1,38 @@
+---
+
+import Layout from '../layouts/Layout.astro';
+import ProfileHeader from '../components/profile-header.astro';
+import Stats from '../components/stats.astro';
+import SeasonsTable from '../components/seasons-table.astro';
+
+import career from '../../public/career.json';
+
+---
+
+<Layout>
+	<ProfileHeader {...career.profile} />
+
+	<hr>
+
+	<h2>Premier Career Data</h2>
+
+	<Stats {...career.premier.stats} />
+
+	<details>
+		<summary>Seasons</summary>
+
+		<SeasonsTable seasons={career.premier.seasons} />
+	</details>
+
+	<hr>
+
+	<h2>Standard Career Data</h2>
+
+	<Stats {...career.standard.stats} />
+
+	<details>
+		<summary>Seasons</summary>
+
+		<SeasonsTable seasons={career.standard.seasons} />
+	</details>
+</Layout>

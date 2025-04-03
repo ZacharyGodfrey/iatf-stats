@@ -1,17 +1,18 @@
 {
-  "type": "module",
-  "scripts": {
-    "scrape": "node ./scripts/scrape.js",
-    "report": "node ./scripts/report.js",
-    "build": "node ./scripts/build.js"
-  },
-  "dependencies": {
-    "better-sqlite3": "^9.0.0",
-    "front-matter": "^4.0.2",
-    "fs-extra": "^9.0.1",
-    "glob": "^10.3.10",
-    "mustache": "^4.2.0",
-    "puppeteer": "^23.3.0",
-    "sharp": "^0.33.5"
-  }
+	"name": "iatf-stats",
+	"version": "0.0.1",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"scrape": "node ./scripts/scrape.js",
+		"report": "node ./scripts/report.js",
+		"build": "cd ./client && npm run build"
+	},
+	"dependencies": {
+		"better-sqlite3": "^9.0.0",
+		"fs-extra": "^9.0.1",
+		"glob": "^10.3.10",
+		"puppeteer": "^23.3.0",
+		"sharp": "^0.33.5"
+	}
 }
