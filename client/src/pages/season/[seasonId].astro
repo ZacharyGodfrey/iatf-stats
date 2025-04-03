@@ -1,0 +1,27 @@
+---
+
+import Page from '../../components/page.astro';
+
+import career from '../../../public/career.json';
+
+export function getStaticPaths() {
+	const seasons = [
+		...career.premier.seasons,
+		...career.standard.seasons
+	];
+
+	return seasons.map((s) => ({
+		params: { seasonId: s.seasonId },
+		props: { season: s }
+	}));
+};
+
+const { season } = Astro.props;
+
+---
+
+<Page>
+	<h2>Season {season.seasonId}</h2>
+
+	<p>{season.name}</p>
+</Page>
