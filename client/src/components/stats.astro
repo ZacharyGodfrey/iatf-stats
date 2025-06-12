@@ -15,10 +15,10 @@ const { hatchet, bigAxe }: Props = Astro.props;
 			<tr>
 				<th>Tool</th>
 				<th>Target</th>
-				<th>Score</th>
-				<th>Hit Rate</th>
 				<th>Score Per Axe</th>
 				<th>Attempts</th>
+				<th>Score</th>
+				<th>Hit Rate</th>
 			</tr>
 		</thead>
 
@@ -26,10 +26,10 @@ const { hatchet, bigAxe }: Props = Astro.props;
 			<tr>
 				<td rowspan="7">Hatchet</td>
 				<td rowspan="4">Bullseye</td>
-				<td>5</td>
-				<td>{hatchet.bullseye.percent[5]}%</td>
 				<td rowspan="4">{hatchet.bullseye.scorePerAxe}</td>
 				<td rowspan="4">{hatchet.bullseye.attempts}</td>
+				<td>5</td>
+				<td>{hatchet.bullseye.percent[5]}%</td>
 			</tr>
 
 			<tr>
@@ -49,10 +49,10 @@ const { hatchet, bigAxe }: Props = Astro.props;
 
 			<tr>
 				<td rowspan="3">Clutch</td>
-				<td>7</td>
-				<td>{hatchet.clutch.percent[7]}%</td>
 				<td rowspan="3">{hatchet.clutch.scorePerAxe}</td>
 				<td rowspan="3">{hatchet.clutch.attempts}</td>
+				<td>7</td>
+				<td>{hatchet.clutch.percent[7]}%</td>
 			</tr>
 
 			<tr>
@@ -70,10 +70,10 @@ const { hatchet, bigAxe }: Props = Astro.props;
 			<tr>
 				<td rowspan="7">Big Axe</td>
 				<td rowspan="4">Bullseye</td>
-				<td>5</td>
-				<td>{bigAxe.bullseye.percent[5]}%</td>
 				<td rowspan="4">{bigAxe.bullseye.scorePerAxe}</td>
 				<td rowspan="4">{bigAxe.bullseye.attempts}</td>
+				<td>5</td>
+				<td>{bigAxe.bullseye.percent[5]}%</td>
 			</tr>
 
 			<tr>
@@ -93,10 +93,10 @@ const { hatchet, bigAxe }: Props = Astro.props;
 
 			<tr>
 				<td rowspan="3">Clutch</td>
-				<td>7</td>
-				<td>{bigAxe.clutch.percent[7]}%</td>
 				<td rowspan="3">{bigAxe.clutch.scorePerAxe}</td>
 				<td rowspan="3">{bigAxe.clutch.attempts}</td>
+				<td>7</td>
+				<td>{bigAxe.clutch.percent[7]}%</td>
 			</tr>
 
 			<tr>
