@@ -13,7 +13,9 @@ const { hatchet, bigAxe }: Props = Astro.props;
 	<table>
 		<thead>
 			<tr>
-				<th colspan="2">Discipline</th>
+				<th>Tool</th>
+				<th>Target</th>
+				<th>Score</th>
 				<th>Hit Rate</th>
 				<th>Score Per Axe</th>
 				<th>Attempts</th>
@@ -22,45 +24,89 @@ const { hatchet, bigAxe }: Props = Astro.props;
 
 		<tbody>
 			<tr>
-				<td rowspan="3">Hatchet</td>
-				<td>Bullseye</td>
+				<td rowspan="7">Hatchet</td>
+				<td rowspan="4">Bullseye</td>
+				<td>5</td>
 				<td>{hatchet.bullseye.percent[5]}%</td>
-				<td>{hatchet.bullseye.scorePerAxe}</td>
-				<td>{hatchet.bullseye.attempts}</td>
+				<td rowspan="4">{hatchet.bullseye.scorePerAxe}</td>
+				<td rowspan="4">{hatchet.bullseye.attempts}</td>
 			</tr>
 
 			<tr>
-				<td>Clutch (5)</td>
-				<td>{hatchet.clutch.percent[5]}%</td>
-				<td rowspan="2">{hatchet.clutch.scorePerAxe}</td>
-				<td rowspan="2">{hatchet.clutch.attempts}</td>
+				<td>3</td>
+				<td>{hatchet.bullseye.percent[3]}%</td>
 			</tr>
 
 			<tr>
-				<td>Clutch (7)</td>
+				<td>1</td>
+				<td>{hatchet.bullseye.percent[1]}%</td>
+			</tr>
+
+			<tr>
+				<td>0</td>
+				<td>{hatchet.bullseye.percent[0]}%</td>
+			</tr>
+
+			<tr>
+				<td rowspan="3">Clutch</td>
+				<td>7</td>
 				<td>{hatchet.clutch.percent[7]}%</td>
+				<td rowspan="3">{hatchet.clutch.scorePerAxe}</td>
+				<td rowspan="3">{hatchet.clutch.attempts}</td>
+			</tr>
+
+			<tr>
+				<td>5</td>
+				<td>{hatchet.clutch.percent[5]}%</td>
+			</tr>
+
+			<tr>
+				<td>0</td>
+				<td>{hatchet.clutch.percent[0]}%</td>
 			</tr>
 		</tbody>
 
 		<tbody>
 			<tr>
-				<td rowspan="3">Big Axe</td>
-				<td>Bullseye</td>
+				<td rowspan="7">Big Axe</td>
+				<td rowspan="4">Bullseye</td>
+				<td>5</td>
 				<td>{bigAxe.bullseye.percent[5]}%</td>
-				<td>{bigAxe.bullseye.scorePerAxe}</td>
-				<td>{bigAxe.bullseye.attempts}</td>
+				<td rowspan="4">{bigAxe.bullseye.scorePerAxe}</td>
+				<td rowspan="4">{bigAxe.bullseye.attempts}</td>
 			</tr>
 
 			<tr>
-				<td>Clutch (5)</td>
-				<td>{bigAxe.clutch.percent[5]}%</td>
-				<td rowspan="2">{bigAxe.clutch.scorePerAxe}</td>
-				<td rowspan="2">{bigAxe.clutch.attempts}</td>
+				<td>3</td>
+				<td>{bigAxe.bullseye.percent[3]}%</td>
 			</tr>
 
 			<tr>
-				<td>Clutch (7)</td>
+				<td>1</td>
+				<td>{bigAxe.bullseye.percent[1]}%</td>
+			</tr>
+
+			<tr>
+				<td>0</td>
+				<td>{bigAxe.bullseye.percent[0]}%</td>
+			</tr>
+
+			<tr>
+				<td rowspan="3">Clutch</td>
+				<td>7</td>
 				<td>{bigAxe.clutch.percent[7]}%</td>
+				<td rowspan="3">{bigAxe.clutch.scorePerAxe}</td>
+				<td rowspan="3">{bigAxe.clutch.attempts}</td>
+			</tr>
+
+			<tr>
+				<td>5</td>
+				<td>{bigAxe.clutch.percent[5]}%</td>
+			</tr>
+
+			<tr>
+				<td>0</td>
+				<td>{bigAxe.clutch.percent[0]}%</td>
 			</tr>
 		</tbody>
 	</table>
