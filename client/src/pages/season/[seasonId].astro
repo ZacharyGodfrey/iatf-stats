@@ -1,6 +1,7 @@
 ---
 
 import Page from '../../components/page.astro';
+import Stats from '../../components/stats.astro';
 
 import career from '../../../public/career.json';
 
@@ -24,4 +25,8 @@ const { season } = Astro.props;
 	<h2>Season {season.seasonId}</h2>
 
 	<p>{season.name}</p>
+
+	<hr>
+
+	<Stats {...season.stats} />
 </Page>
