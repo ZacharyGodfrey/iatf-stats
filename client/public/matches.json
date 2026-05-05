@@ -216,7 +216,7 @@
     "weekId": 1,
     "matchId": 8222455,
     "opponentId": 1008079,
-    "opponentName": "Tasteful Sideboob",
+    "opponentName": "Tasteful sideboob",
     "overtime": false,
     "outcome": "Loss",
     "roundOutcomes": [
@@ -1797,7 +1797,7 @@
     "weekId": 2,
     "matchId": 8264483,
     "opponentId": 1008079,
-    "opponentName": "Tasteful Sideboob",
+    "opponentName": "Tasteful sideboob",
     "overtime": false,
     "outcome": "Loss",
     "roundOutcomes": [
@@ -2446,7 +2446,7 @@
     "weekId": 3,
     "matchId": 8691616,
     "opponentId": 1008079,
-    "opponentName": "Tasteful Sideboob",
+    "opponentName": "Tasteful sideboob",
     "overtime": false,
     "outcome": "Win",
     "roundOutcomes": [
@@ -3450,7 +3450,7 @@
     "weekId": 7,
     "matchId": 8691722,
     "opponentId": 1008079,
-    "opponentName": "Tasteful Sideboob",
+    "opponentName": "Tasteful sideboob",
     "overtime": true,
     "outcome": "Win",
     "roundOutcomes": [
@@ -4570,7 +4570,7 @@
     "weekId": 4,
     "matchId": 8977330,
     "opponentId": 1008079,
-    "opponentName": "Tasteful Sideboob",
+    "opponentName": "Tasteful sideboob",
     "overtime": false,
     "outcome": "Win",
     "roundOutcomes": [
@@ -5795,7 +5795,7 @@
     "weekId": 2,
     "matchId": 8981898,
     "opponentId": 1008079,
-    "opponentName": "Tasteful Sideboob",
+    "opponentName": "Tasteful sideboob",
     "overtime": false,
     "outcome": "Win",
     "roundOutcomes": [
@@ -6315,7 +6315,7 @@
     "weekId": 4,
     "matchId": 8981934,
     "opponentId": 1008079,
-    "opponentName": "Tasteful Sideboob",
+    "opponentName": "Tasteful sideboob",
     "overtime": true,
     "outcome": "OTL",
     "roundOutcomes": [
@@ -6856,7 +6856,7 @@
     "weekId": 6,
     "matchId": 8981970,
     "opponentId": 1008079,
-    "opponentName": "Tasteful Sideboob",
+    "opponentName": "Tasteful sideboob",
     "overtime": false,
     "outcome": "Win",
     "roundOutcomes": [
@@ -11435,7 +11435,7 @@
     "weekId": 2,
     "matchId": 9918308,
     "opponentId": 530707,
-    "opponentName": "Shampain Shane",
+    "opponentName": "Appalachian Malört",
     "overtime": false,
     "outcome": "Loss",
     "roundOutcomes": [
@@ -12090,7 +12090,7 @@
     "weekId": 5,
     "matchId": 9918363,
     "opponentId": 530707,
-    "opponentName": "Shampain Shane",
+    "opponentName": "Appalachian Malört",
     "overtime": false,
     "outcome": "Win",
     "roundOutcomes": [
@@ -12740,7 +12740,7 @@
     "weekId": 7,
     "matchId": 9918418,
     "opponentId": 530707,
-    "opponentName": "Shampain Shane",
+    "opponentName": "Appalachian Malört",
     "overtime": false,
     "outcome": "Win",
     "roundOutcomes": [
@@ -15036,7 +15036,7 @@
     "weekId": 2,
     "matchId": 10374472,
     "opponentId": 1408913,
-    "opponentName": "Pain in the axe",
+    "opponentName": "Pain in the Axe",
     "overtime": true,
     "outcome": "Win",
     "roundOutcomes": [
@@ -16043,7 +16043,7 @@
     "weekId": 6,
     "matchId": 10374592,
     "opponentId": 1408913,
-    "opponentName": "Pain in the axe",
+    "opponentName": "Pain in the Axe",
     "overtime": false,
     "outcome": "Win",
     "roundOutcomes": [
@@ -18353,7 +18353,7 @@
     "weekId": 1,
     "matchId": 10705222,
     "opponentId": 1408913,
-    "opponentName": "Pain in the axe",
+    "opponentName": "Pain in the Axe",
     "overtime": true,
     "outcome": "OTL",
     "roundOutcomes": [
@@ -18755,7 +18755,7 @@
     "weekId": 2,
     "matchId": 10705243,
     "opponentId": 1408913,
-    "opponentName": "Pain in the axe",
+    "opponentName": "Pain in the Axe",
     "overtime": false,
     "outcome": "Loss",
     "roundOutcomes": [
@@ -19150,7 +19150,7 @@
     "weekId": 4,
     "matchId": 10705264,
     "opponentId": 1408913,
-    "opponentName": "Pain in the axe",
+    "opponentName": "Pain in the Axe",
     "overtime": false,
     "outcome": "Win",
     "roundOutcomes": [
@@ -19545,7 +19545,7 @@
     "weekId": 5,
     "matchId": 10705285,
     "opponentId": 1408913,
-    "opponentName": "Pain in the axe",
+    "opponentName": "Pain in the Axe",
     "overtime": false,
     "outcome": "Loss",
     "roundOutcomes": [
@@ -19942,7 +19942,7 @@
     "weekId": 7,
     "matchId": 10705306,
     "opponentId": 1408913,
-    "opponentName": "Pain in the axe",
+    "opponentName": "Pain in the Axe",
     "overtime": false,
     "outcome": "Win",
     "roundOutcomes": [
@@ -24449,7 +24449,7 @@
     "weekId": 5,
     "matchId": 11628586,
     "opponentId": 1408913,
-    "opponentName": "Pain in the axe",
+    "opponentName": "Pain in the Axe",
     "overtime": true,
     "outcome": "Win",
     "roundOutcomes": [
@@ -25169,7 +25169,7 @@
     "weekId": 5,
     "matchId": 11628650,
     "opponentId": 1408913,
-    "opponentName": "Pain in the axe",
+    "opponentName": "Pain in the Axe",
     "overtime": false,
     "outcome": "Win",
     "roundOutcomes": [
@@ -26079,7 +26079,7 @@
     "weekId": 2,
     "matchId": 11815240,
     "opponentId": 1008079,
-    "opponentName": "Tasteful Sideboob",
+    "opponentName": "Tasteful sideboob",
     "overtime": true,
     "outcome": "Win",
     "roundOutcomes": [
@@ -27315,7 +27315,7 @@
     "weekId": 7,
     "matchId": 11815430,
     "opponentId": 1008079,
-    "opponentName": "Tasteful Sideboob",
+    "opponentName": "Tasteful sideboob",
     "overtime": false,
     "outcome": "Win",
     "roundOutcomes": [
@@ -27582,7 +27582,7 @@
     "weekId": 1,
     "matchId": 13370947,
     "opponentId": 1008079,
-    "opponentName": "Tasteful Sideboob",
+    "opponentName": "Tasteful sideboob",
     "overtime": false,
     "outcome": "Win",
     "roundOutcomes": [
@@ -27777,7 +27777,7 @@
     "weekId": 1,
     "matchId": 13370956,
     "opponentId": 1408913,
-    "opponentName": "Pain in the axe",
+    "opponentName": "Pain in the Axe",
     "overtime": false,
     "outcome": "Loss",
     "roundOutcomes": [
@@ -27907,7 +27907,7 @@
     "weekId": 2,
     "matchId": 13402037,
     "opponentId": 1008079,
-    "opponentName": "Tasteful Sideboob",
+    "opponentName": "Tasteful sideboob",
     "overtime": false,
     "outcome": "Win",
     "roundOutcomes": [
@@ -27972,7 +27972,7 @@
     "weekId": 2,
     "matchId": 13402047,
     "opponentId": 1408913,
-    "opponentName": "Pain in the axe",
+    "opponentName": "Pain in the Axe",
     "overtime": false,
     "outcome": "Loss",
     "roundOutcomes": [
@@ -28037,7 +28037,7 @@
     "weekId": 2,
     "matchId": 13402058,
     "opponentId": 1008079,
-    "opponentName": "Tasteful Sideboob",
+    "opponentName": "Tasteful sideboob",
     "overtime": false,
     "outcome": "Loss",
     "roundOutcomes": [
@@ -28784,7 +28784,7 @@
     "weekId": 7,
     "matchId": 13468318,
     "opponentId": 1408913,
-    "opponentName": "Pain in the axe",
+    "opponentName": "Pain in the Axe",
     "overtime": false,
     "outcome": "Loss",
     "roundOutcomes": [
@@ -29183,7 +29183,7 @@
     "weekId": 7,
     "matchId": 13468345,
     "opponentId": 1408913,
-    "opponentName": "Pain in the axe",
+    "opponentName": "Pain in the Axe",
     "overtime": false,
     "outcome": "Loss",
     "roundOutcomes": [
@@ -29378,7 +29378,7 @@
     "weekId": 4,
     "matchId": 13468358,
     "opponentId": 1008079,
-    "opponentName": "Tasteful Sideboob",
+    "opponentName": "Tasteful sideboob",
     "overtime": false,
     "outcome": "Win",
     "roundOutcomes": [
@@ -29508,7 +29508,7 @@
     "weekId": 3,
     "matchId": 13669187,
     "opponentId": 1408913,
-    "opponentName": "Pain in the axe",
+    "opponentName": "Pain in the Axe",
     "overtime": false,
     "outcome": "Win",
     "roundOutcomes": [
@@ -29638,7 +29638,7 @@
     "weekId": 1,
     "matchId": 13669191,
     "opponentId": 1008079,
-    "opponentName": "Tasteful Sideboob",
+    "opponentName": "Tasteful sideboob",
     "overtime": false,
     "outcome": "Win",
     "roundOutcomes": [
@@ -29768,7 +29768,7 @@
     "weekId": 2,
     "matchId": 13669197,
     "opponentId": 1408913,
-    "opponentName": "Pain in the axe",
+    "opponentName": "Pain in the Axe",
     "overtime": false,
     "outcome": "Loss",
     "roundOutcomes": [
@@ -29898,7 +29898,7 @@
     "weekId": 2,
     "matchId": 13669201,
     "opponentId": 1008079,
-    "opponentName": "Tasteful Sideboob",
+    "opponentName": "Tasteful sideboob",
     "overtime": false,
     "outcome": "Win",
     "roundOutcomes": [
@@ -30028,7 +30028,7 @@
     "weekId": 2,
     "matchId": 13669207,
     "opponentId": 1408913,
-    "opponentName": "Pain in the axe",
+    "opponentName": "Pain in the Axe",
     "overtime": false,
     "outcome": "Loss",
     "roundOutcomes": [
@@ -30158,7 +30158,7 @@
     "weekId": 3,
     "matchId": 13669211,
     "opponentId": 1008079,
-    "opponentName": "Tasteful Sideboob",
+    "opponentName": "Tasteful sideboob",
     "overtime": false,
     "outcome": "Win",
     "roundOutcomes": [
@@ -30288,7 +30288,7 @@
     "weekId": 3,
     "matchId": 13669217,
     "opponentId": 1408913,
-    "opponentName": "Pain in the axe",
+    "opponentName": "Pain in the Axe",
     "overtime": false,
     "outcome": "Loss",
     "roundOutcomes": [
@@ -30418,7 +30418,7 @@
     "weekId": 3,
     "matchId": 13669221,
     "opponentId": 1008079,
-    "opponentName": "Tasteful Sideboob",
+    "opponentName": "Tasteful sideboob",
     "overtime": false,
     "outcome": "Win",
     "roundOutcomes": [
@@ -30548,7 +30548,7 @@
     "weekId": 4,
     "matchId": 13669227,
     "opponentId": 1408913,
-    "opponentName": "Pain in the axe",
+    "opponentName": "Pain in the Axe",
     "overtime": false,
     "outcome": "Loss",
     "roundOutcomes": [
@@ -30678,7 +30678,7 @@
     "weekId": 4,
     "matchId": 13669231,
     "opponentId": 1008079,
-    "opponentName": "Tasteful Sideboob",
+    "opponentName": "Tasteful sideboob",
     "overtime": true,
     "outcome": "OTL",
     "roundOutcomes": [
@@ -30943,7 +30943,7 @@
     "weekId": 2,
     "matchId": 13891064,
     "opponentId": 1408913,
-    "opponentName": "Pain in the axe",
+    "opponentName": "Pain in the Axe",
     "overtime": false,
     "outcome": "Loss",
     "roundOutcomes": [
@@ -31073,7 +31073,7 @@
     "weekId": 3,
     "matchId": 13973179,
     "opponentId": 1008079,
-    "opponentName": "Tasteful Sideboob",
+    "opponentName": "Tasteful sideboob",
     "overtime": false,
     "outcome": "Win",
     "roundOutcomes": [
@@ -31452,7 +31452,7 @@
     "weekId": 4,
     "matchId": 13973210,
     "opponentId": 1408913,
-    "opponentName": "Pain in the axe",
+    "opponentName": "Pain in the Axe",
     "overtime": false,
     "outcome": "Loss",
     "roundOutcomes": [
@@ -31517,7 +31517,7 @@
     "weekId": 4,
     "matchId": 13973216,
     "opponentId": 1008079,
-    "opponentName": "Tasteful Sideboob",
+    "opponentName": "Tasteful sideboob",
     "overtime": false,
     "outcome": "Win",
     "roundOutcomes": [
@@ -32021,7 +32021,7 @@
     "weekId": 2,
     "matchId": 13973255,
     "opponentId": 1408913,
-    "opponentName": "Pain in the axe",
+    "opponentName": "Pain in the Axe",
     "overtime": false,
     "outcome": "Win",
     "roundOutcomes": [
@@ -32086,7 +32086,7 @@
     "weekId": 4,
     "matchId": 13973261,
     "opponentId": 1008079,
-    "opponentName": "Tasteful Sideboob",
+    "opponentName": "Tasteful sideboob",
     "overtime": false,
     "outcome": "Loss",
     "roundOutcomes": [
@@ -32541,7 +32541,7 @@
     "weekId": 1,
     "matchId": 14244203,
     "opponentId": 1008079,
-    "opponentName": "Tasteful Sideboob",
+    "opponentName": "Tasteful sideboob",
     "overtime": true,
     "outcome": "OTL",
     "roundOutcomes": [
@@ -32611,7 +32611,7 @@
     "weekId": 3,
     "matchId": 14244205,
     "opponentId": 1408913,
-    "opponentName": "Pain in the axe",
+    "opponentName": "Pain in the Axe",
     "overtime": true,
     "outcome": "OTL",
     "roundOutcomes": [
@@ -32941,7 +32941,7 @@
     "weekId": 2,
     "matchId": 14244224,
     "opponentId": 1008079,
-    "opponentName": "Tasteful Sideboob",
+    "opponentName": "Tasteful sideboob",
     "overtime": false,
     "outcome": "Win",
     "roundOutcomes": [
@@ -33006,7 +33006,7 @@
     "weekId": 2,
     "matchId": 14244226,
     "opponentId": 1408913,
-    "opponentName": "Pain in the axe",
+    "opponentName": "Pain in the Axe",
     "overtime": false,
     "outcome": "Win",
     "roundOutcomes": [
@@ -33338,7 +33338,7 @@
     "weekId": 4,
     "matchId": 14244245,
     "opponentId": 1008079,
-    "opponentName": "Tasteful Sideboob",
+    "opponentName": "Tasteful sideboob",
     "overtime": false,
     "outcome": "Loss",
     "roundOutcomes": [
@@ -33403,7 +33403,7 @@
     "weekId": 4,
     "matchId": 14244247,
     "opponentId": 1408913,
-    "opponentName": "Pain in the axe",
+    "opponentName": "Pain in the Axe",
     "overtime": false,
     "outcome": "Win",
     "roundOutcomes": [
@@ -33728,7 +33728,7 @@
     "weekId": 6,
     "matchId": 14244266,
     "opponentId": 1008079,
-    "opponentName": "Tasteful Sideboob",
+    "opponentName": "Tasteful sideboob",
     "overtime": false,
     "outcome": "Win",
     "roundOutcomes": [
@@ -33793,7 +33793,7 @@
     "weekId": 7,
     "matchId": 14244268,
     "opponentId": 1408913,
-    "opponentName": "Pain in the axe",
+    "opponentName": "Pain in the Axe",
     "overtime": false,
     "outcome": "Loss",
     "roundOutcomes": [
@@ -34131,7 +34131,7 @@
     "weekId": 7,
     "matchId": 14244287,
     "opponentId": 1008079,
-    "opponentName": "Tasteful Sideboob",
+    "opponentName": "Tasteful sideboob",
     "overtime": true,
     "outcome": "Win",
     "roundOutcomes": [
@@ -34201,7 +34201,7 @@
     "weekId": 7,
     "matchId": 14244289,
     "opponentId": 1408913,
-    "opponentName": "Pain in the axe",
+    "opponentName": "Pain in the Axe",
     "overtime": false,
     "outcome": "Loss",
     "roundOutcomes": [
@@ -34409,7 +34409,7 @@
     "weekId": 2,
     "matchId": 14564789,
     "opponentId": 1408913,
-    "opponentName": "Pain in the axe",
+    "opponentName": "Pain in the Axe",
     "overtime": true,
     "outcome": "OTL",
     "roundOutcomes": [
@@ -34609,7 +34609,7 @@
     "weekId": 2,
     "matchId": 14564808,
     "opponentId": 1008079,
-    "opponentName": "Tasteful Sideboob",
+    "opponentName": "Tasteful sideboob",
     "overtime": false,
     "outcome": "Win",
     "roundOutcomes": [
@@ -34739,7 +34739,7 @@
     "weekId": 2,
     "matchId": 14564826,
     "opponentId": 1408913,
-    "opponentName": "Pain in the axe",
+    "opponentName": "Pain in the Axe",
     "overtime": true,
     "outcome": "Win",
     "roundOutcomes": [
@@ -34874,7 +34874,7 @@
     "weekId": 2,
     "matchId": 14564869,
     "opponentId": 1408913,
-    "opponentName": "Pain in the axe",
+    "opponentName": "Pain in the Axe",
     "overtime": false,
     "outcome": "Win",
     "roundOutcomes": [
@@ -35399,7 +35399,7 @@
     "weekId": 5,
     "matchId": 14594205,
     "opponentId": 1008079,
-    "opponentName": "Tasteful Sideboob",
+    "opponentName": "Tasteful sideboob",
     "overtime": false,
     "outcome": "Loss",
     "roundOutcomes": [
@@ -35919,7 +35919,7 @@
     "weekId": 7,
     "matchId": 14594254,
     "opponentId": 1008079,
-    "opponentName": "Tasteful Sideboob",
+    "opponentName": "Tasteful sideboob",
     "overtime": true,
     "outcome": "OTL",
     "roundOutcomes": [
@@ -36219,7 +36219,7 @@
     "weekId": 1,
     "matchId": 14835756,
     "opponentId": 1008079,
-    "opponentName": "Tasteful Sideboob",
+    "opponentName": "Tasteful sideboob",
     "overtime": false,
     "outcome": "Loss",
     "roundOutcomes": [
@@ -36284,7 +36284,7 @@
     "weekId": 1,
     "matchId": 14835759,
     "opponentId": 1408913,
-    "opponentName": "Pain in the axe",
+    "opponentName": "Pain in the Axe",
     "overtime": false,
     "outcome": "Loss",
     "roundOutcomes": [
@@ -36549,7 +36549,7 @@
     "weekId": 2,
     "matchId": 14861529,
     "opponentId": 1408913,
-    "opponentName": "Pain in the axe",
+    "opponentName": "Pain in the Axe",
     "overtime": true,
     "outcome": "OTL",
     "roundOutcomes": [
@@ -36749,7 +36749,7 @@
     "weekId": 3,
     "matchId": 14861538,
     "opponentId": 1008079,
-    "opponentName": "Tasteful Sideboob",
+    "opponentName": "Tasteful sideboob",
     "overtime": true,
     "outcome": "OTL",
     "roundOutcomes": [
@@ -36892,7 +36892,7 @@
     "weekId": 4,
     "matchId": 14861544,
     "opponentId": 1408913,
-    "opponentName": "Pain in the axe",
+    "opponentName": "Pain in the Axe",
     "overtime": false,
     "outcome": "Loss",
     "roundOutcomes": [
@@ -37087,7 +37087,7 @@
     "weekId": 6,
     "matchId": 14861553,
     "opponentId": 1008079,
-    "opponentName": "Tasteful Sideboob",
+    "opponentName": "Tasteful sideboob",
     "overtime": false,
     "outcome": "Win",
     "roundOutcomes": [
@@ -37201,7 +37201,7 @@
     "weekId": 6,
     "matchId": 14861559,
     "opponentId": 1408913,
-    "opponentName": "Pain in the axe",
+    "opponentName": "Pain in the Axe",
     "overtime": true,
     "outcome": "OTL",
     "roundOutcomes": [
@@ -37401,7 +37401,7 @@
     "weekId": 2,
     "matchId": 14861568,
     "opponentId": 1008079,
-    "opponentName": "Tasteful Sideboob",
+    "opponentName": "Tasteful sideboob",
     "overtime": false,
     "outcome": "Win",
     "roundOutcomes": [
@@ -37531,7 +37531,7 @@
     "weekId": 7,
     "matchId": 14861574,
     "opponentId": 1408913,
-    "opponentName": "Pain in the axe",
+    "opponentName": "Pain in the Axe",
     "overtime": false,
     "outcome": "Win",
     "roundOutcomes": [
@@ -37731,7 +37731,7 @@
     "weekId": 4,
     "matchId": 14861583,
     "opponentId": 1008079,
-    "opponentName": "Tasteful Sideboob",
+    "opponentName": "Tasteful sideboob",
     "overtime": false,
     "outcome": "Win",
     "roundOutcomes": [
@@ -37845,7 +37845,7 @@
     "weekId": 7,
     "matchId": 14861589,
     "opponentId": 1408913,
-    "opponentName": "Pain in the axe",
+    "opponentName": "Pain in the Axe",
     "overtime": false,
     "outcome": "Win",
     "roundOutcomes": [

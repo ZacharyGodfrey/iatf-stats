@@ -11,7 +11,7 @@
 	},
 	"dependencies": {
 		"astro": "^5.5.6",
-		"better-sqlite3": "^9.0.0",
+		"better-sqlite3": "^12.9.0",
 		"fs-extra": "^9.0.1",
 		"glob": "^10.3.10",
 		"puppeteer": "^23.3.0",

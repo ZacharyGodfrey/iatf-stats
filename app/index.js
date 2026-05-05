@@ -25,9 +25,15 @@ function reactPageState(page) {
 
 function isDesiredResponse(method, status, url) {
 	return (response) => {
-		return response.request().method() === method
-			&& response.status() === status
-			&& response.url() === url;
+		const res = {
+			method: response.request().method(),
+			status: response.status(),
+			url: response.url()
+		};
+
+		return res.method === method
+			&& res.status === status
+			&& res.url === url;
 	};
 }
 
@@ -124,6 +130,18 @@ async function fetchMatchData(page, profileId, matchId) {
 	});
 
 	return result;
+}
+
+async function fetchProfileImage(profileId) {
+	console.log(`Fetching image ${profileId}`);
+
+	const response = await fetch(`https://admin.axescores.com/pic/${profileId}`);
+	const originalBuffer = await response.arrayBuffer();
+	const webpBuffer = await imageToWebp(originalBuffer);
+
+	console.log('Done.');
+
+	return webpBuffer;
 }
 
 export function getCareerData(db) {
@@ -244,16 +262,16 @@ export function getCareerData(db) {
 
 // Scrape
 
-export async function fetchProfileImage(profileId) {
-	console.log(`Fetching image ${profileId}`);
+export async function updateProfileImages(db) {
+	const profiles = db.rows(`SELECT profileId FROM profiles`);
 
-	const response = await fetch(`https://admin.axescores.com/pic/${profileId}`);
-	const originalBuffer = await response.arrayBuffer();
-	const webpBuffer = await imageToWebp(originalBuffer);
-
-	console.log('Done.');
-
-	return webpBuffer;
+	for (const { profileId } of profiles) {
+		await fetchProfileImage(profileId).then((image) => {
+			writeFile(`client/public/images/${profileId}.webp`, image, null);
+		}).catch((error) => {
+			logError(error, { profileId });
+		});
+	}
 }
 
 export async function discoverMatches(db, page, profileId) {

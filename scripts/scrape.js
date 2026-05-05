@@ -4,7 +4,7 @@ import { writeFile } from '../lib/file.js';
 import { logError } from '../lib/miscellaneous.js';
 import {
 	PROFILE_ID,
-	fetchProfileImage,
+	updateProfileImages,
 	discoverMatches,
 	processMatches,
 	exportFlattenedMatches,
@@ -19,13 +19,7 @@ const page = await browser.newPage();
 
 await page.setUserAgent(userAgent);
 
-for (const { profileId } of db.rows(`SELECT profileId FROM profiles`)) {
-	await fetchProfileImage(profileId).then((image) => {
-		writeFile(`client/public/images/${profileId}.webp`, image, null);
-	}).catch((error) => {
-		logError(error, { profileId });
-	});
-}
+await updateProfileImages(db);
 
 await discoverMatches(db, page, PROFILE_ID);
 
