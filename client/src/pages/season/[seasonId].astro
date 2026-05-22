@@ -12,7 +12,7 @@ export function getStaticPaths() {
 	];
 
 	return seasons.map((s) => ({
-		params: { seasonId: s.seasonId },
+		params: { seasonId: `${s.seasonId}` },
 		props: { season: s }
 	}));
 };

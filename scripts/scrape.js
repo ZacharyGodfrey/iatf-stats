@@ -2,15 +2,15 @@ import { database } from '../lib/database.js';
 import { launchBrowser, userAgent } from '../lib/browser.js';
 import { writeFile } from '../lib/file.js';
 import { logError } from '../lib/miscellaneous.js';
+import { PROFILE_ID } from '../app/constants.js';
 import {
-	PROFILE_ID,
 	updateProfileImages,
 	discoverMatches,
 	processMatches,
 	exportFlattenedMatches,
 	exportCareerData,
 	tearDown
-} from '../app/index.js';
+} from '../app/scrape.js';
 
 const start = Date.now();
 const db = database();

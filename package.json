@@ -10,10 +10,9 @@
 		"dev": "astro dev --root ./client"
 	},
 	"dependencies": {
-		"astro": "^5.5.6",
+		"astro": "^6.3.7",
 		"better-sqlite3": "^12.9.0",
 		"fs-extra": "^9.0.1",
-		"glob": "^10.3.10",
 		"puppeteer": "^23.3.0",
 		"sharp": "^0.33.5"
 	}
