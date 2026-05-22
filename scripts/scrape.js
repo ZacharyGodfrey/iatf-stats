@@ -19,11 +19,11 @@ const page = await browser.newPage();
 
 await page.setUserAgent(userAgent);
 
-await updateProfileImages(db);
-
 await discoverMatches(db, page, PROFILE_ID);
 
 await processMatches(db, page, PROFILE_ID);
+
+await updateProfileImages(db);
 
 exportFlattenedMatches(db);
 

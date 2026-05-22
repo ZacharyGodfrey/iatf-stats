@@ -19,6 +19,8 @@ import {
 } from './helpers.js';
 
 export async function updateProfileImages(db) {
+	console.log('===== Update Profile Images');
+
 	const profiles = db.rows(`SELECT profileId FROM profiles`);
 
 	for (const { profileId } of profiles) {
